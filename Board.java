@@ -121,9 +121,18 @@ public class Board extends JPanel {
                 g.fillRect(row*pixel, col*pixel, pixel, pixel);
                 if (entireBoard[row][col] =='+') {
                     g.setColor(Color.YELLOW);
-                    g.fillOval(pixel *row, col*pixel, pixel, pixel); 
+             
 
+                } else if (entireBoard[row][col] == '!') {
+                    g.setColor(Color.RED);
+                    
+                } else {
+                    g.setColor(Color.PINK);
+                    
                 }
+                g.fillOval(pixel*row, col*col, pixel, pixel);
+                
+                
                     
                 }
 

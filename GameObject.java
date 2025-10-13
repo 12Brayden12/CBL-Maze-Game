@@ -35,7 +35,7 @@ public class GameObject {
     public void add(Board board, int amount) {
         for (int i =0; i < amount; i++) {
             Position pos = availablePosition(board);
-            board.setValueBox(pos.getX(), pos.getY(), symbol);
+            board.setValueBox(pos.getX(), pos.getY(),symbol);
         }
     }
 }
