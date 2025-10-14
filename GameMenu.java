@@ -47,6 +47,20 @@ public class GameMenu {
        play.setMaximumSize(buttonSize);
        play.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent ae) {
+                Difficulty.GameSettings settings = Difficulty.chooseDifficulty();
+                if (settings == null) return; 
+                System.out.println("Fake Fruits: " + settings.fakeFruitCount);
+                System.out.println("Traps: " + settings.trapCount);
+                System.out.println("Time Limit: " + settings.timeLimit);
+
+                JFrame gameFrame = new JFrame("Maze Game");
+                gameFrame.setSize(500, 500);
+                gameFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+                Board gameBoard = new Board(10, 10, 10, settings.fakeFruitCount, settings.trapCount);
+                gameFrame.add(gameBoard);
+
+                gameFrame.setVisible(true);
 
         }
        });
