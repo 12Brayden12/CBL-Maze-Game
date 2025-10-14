@@ -1,4 +1,4 @@
-public class Trap extends Entity {
+/**public class Trap extends Entity {
 
     public Trap(int x, int y) {
         super(x, y);

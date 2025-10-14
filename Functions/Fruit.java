@@ -1,4 +1,4 @@
-public class Fruit extends Entity {
+/**public class Fruit extends Entity {
     private int value;
 
     public Fruit(int x, int y, int value) {

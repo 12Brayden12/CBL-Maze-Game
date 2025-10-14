@@ -1,4 +1,4 @@
-public class FakeFruit extends Entity {
+/*public class FakeFruit extends Entity {
     private int reverseSeconds;
 
     public FakeFruit(int x, int y, int reverseSeconds) {
