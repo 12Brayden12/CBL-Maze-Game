@@ -14,19 +14,11 @@ public class Board extends JPanel {
     private int unVisited;
     private int scale;
     private Position currentCell;
-    private Position positionList[];
-    private Image innerWall;
-    private Image outerWall;
-    private Image character;
-    private Image floor;
-    private Image fruit;
-    private Image fakeFruit;
-    private Image exit;
-    private Image trap;
+
     
     ArrayDeque<Position> positions = new ArrayDeque<>();
 
-    public Board(int x, int y, int fruitC, int fakeFruitC, int trapC) {
+    public Board(int x, int y, int fruitC,int fakeFruitC, int trapC) {
         initializeBoard(x, y);
         codeMaze();
 
@@ -36,7 +28,7 @@ public class Board extends JPanel {
 
         fruits.add(this, fruitC);
         fakeFruits.add(this, fakeFruitC);
-        fruits.add(this, trapC);
+        traps.add(this, trapC);
 
 
         
@@ -47,12 +39,12 @@ public class Board extends JPanel {
     }
     public void codeMaze() {
         for ( int row = 0; row < size; row++) {
-            for(int col = 0; col < scale; col++) {
+            for(int col = 0; col < size; col++) {
                 entireBoard[row][col] = 'u';
             }
         }
         for ( int row = 0; row < size; row += 2) {
-            for(int col = 0; col < scale; col++) {
+            for(int col = 0; col < size; col++) {
                 entireBoard[row][col] = '=';
                 entireBoard[col][row] = '=';
             }
@@ -63,21 +55,21 @@ public class Board extends JPanel {
             entireBoard[0][row] = '#';
             entireBoard[size - 1][row] = '#';
             
-            generate(1, 1);
         }
+        generate(1, 1);
     }
 
 
 
     public void initializeBoard(int width, int length) {
-        unVisited = width*length;
+        unVisited = width*width;
         width = width*2 + 1;
         length = length*2 +1;
         scale = length;
         entireBoard = new char[width][length];
         size = width;
-        currentCell = new Position(5,5);
-        positionList = new Position[size];
+        currentCell = new Position(1,1);
+        
 
     }
     public int boardSize() {
@@ -101,36 +93,34 @@ public class Board extends JPanel {
         int pixel = Math.min(currentWidth/size, currentHeight/size);
 
         for (int row = 0; row < size; row++) {
-            for (int col = 0; col < scale; col++) {
+            for (int col = 0; col < size; col++) {
                 if (entireBoard[row][col] == '=') {
-                    g.setColor(Color.BLACK);
-                    
-                    
+                    g.setColor(Color.black);
+                    g.fillRect(row*pixel, col*pixel, pixel, pixel);
                 }
-                else if (entireBoard[row][col] == '=') {
-                    g.setColor(Color.BLACK);
-                    
+                else if (entireBoard[row][col] == '#') {
+                    g.setColor(Color.black);
+                    g.fillRect(row*pixel, col*pixel, pixel, pixel);
                 } 
                 else if (entireBoard[row][col] == '8') {
                     g.setColor(Color.RED);
+                    g.fillRect(row*pixel, col*pixel, pixel, pixel);
                 }
-                else {
+                else if (entireBoard[row][col] == 'X') {
                     g.setColor(Color.BLUE);
-                    
-                }
-                g.fillRect(row*pixel, col*pixel, pixel, pixel);
-                if (entireBoard[row][col] =='+') {
+                    g.fillRect(row*pixel, col*pixel, pixel, pixel);
+                } else if (entireBoard[row][col] =='+') {
                     g.setColor(Color.YELLOW);
-             
-
+                    g.fillOval(pixel*row, col*pixel, pixel, pixel);
                 } else if (entireBoard[row][col] == '!') {
                     g.setColor(Color.RED);
+                    g.fillOval(pixel*row, col*col, pixel, pixel);
                     
-                } else {
+                } else if (entireBoard[row][col] == '@') {
                     g.setColor(Color.PINK);
-                    
+
+                    g.fillOval(pixel*row, col*pixel, pixel, pixel);
                 }
-                g.fillOval(pixel*row, col*col, pixel, pixel);
                 
                 
                     
@@ -143,7 +133,7 @@ public class Board extends JPanel {
     }
     public void textVersion() {
         for (int row = 0; row < size; row++) {
-            for (int col = 0; col < scale; col++) {
+            for (int col = 0; col < size; col++) {
                 System.out.print(entireBoard[row][col]);
                 System.out.print(" ");
             }
@@ -182,14 +172,24 @@ public char[] directionUpdate(Position currentCell) {
     char south = 0;
     char west = 0;
     char east = 0;
-    if (getValue(currentCell.getX(), currentCell.getY() +1) != '#');
-    north = getValue(currentCell.getX(),currentCell.getY() +2);
-    if (getValue(currentCell.getX() +1, currentCell.getY()) != '#');
-    north = getValue(currentCell.getX() +2 ,currentCell.getY() );
-    if (getValue(currentCell.getX()-1 , currentCell.getY()) != '#');
-    north = getValue(currentCell.getX() -1,currentCell.getY());
-    if (getValue(currentCell.getX(), currentCell.getY() -2) != '#');
-    north = getValue(currentCell.getX(),currentCell.getY() -2);
+    int x = currentCell.getX() -1;
+    int y = currentCell.getY() -1;
+    if (getValue(currentCell.getX(), currentCell.getY() +1) != '#') {
+        east = getValue(currentCell.getX(),currentCell.getY() +2);
+
+    }
+    if (getValue(currentCell.getX() +1, currentCell.getY()) != '#') {
+        north = getValue(currentCell.getX() +2 ,currentCell.getY() );
+
+    }
+    if (x > 0 && getValue(currentCell.getX()-1 , currentCell.getY()) != '#'){ 
+        south = getValue(currentCell.getX() -2,currentCell.getY());
+
+    }
+    if ( y > 0 && getValue(currentCell.getX(), currentCell.getY() -1) != '#') {
+
+        west = getValue(currentCell.getX(),currentCell.getY() -2);
+    }
     char[] direction = {west,east,north,south};
     return direction;
 }
@@ -232,7 +232,8 @@ public void generate(int xCord, int yCord) {
                 direction = directionUpdate(currentCell);
                 unVisited--;
                 
-            } else if (randomDirection == 1 && direction[1] == 'u') {
+            } 
+         }  else if (randomDirection == 1 && direction[1] == 'u') {
                 if (getValue(currentCell.getX()+1, currentCell.getY()) != '#') {
                     setValueBox(currentCell.getX()+1, currentCell.getY(), 'v');
                     currentCell = new Position(currentCell.getX()+2,currentCell.getY());
@@ -240,7 +241,7 @@ public void generate(int xCord, int yCord) {
                     direction = directionUpdate(currentCell);
                     unVisited--;
                     }
-            } else if (randomDirection == 2 && direction[2] == 'u') {
+        } else if (randomDirection == 2 && direction[2] == 'u') {
                 if (getValue(currentCell.getX(), currentCell.getY()-1) != '#') {
                     setValueBox(currentCell.getX(), currentCell.getY()-1, 'v');
                     currentCell = new Position(currentCell.getX(),currentCell.getY()-2);
@@ -251,7 +252,7 @@ public void generate(int xCord, int yCord) {
                     
                 }
                 
-            } else if (randomDirection == 3 && direction[3] == '#') {
+         } else if (randomDirection == 3 && direction[3] == 'u') {
                 if (getValue(currentCell.getX(), currentCell.getY()+1) != '#') {
                     setValueBox(currentCell.getX(), currentCell.getY()+1, 'v');
                     currentCell = new Position(currentCell.getX(),currentCell.getY()+2);
@@ -261,7 +262,7 @@ public void generate(int xCord, int yCord) {
                     unVisited--;
                     
                 }
-            } else {
+        } else {
                 if (full == 0 && positions.size() != 0) {
                     currentCell = positions.pop();
 
@@ -272,8 +273,8 @@ public void generate(int xCord, int yCord) {
             
             
         }
-        setValueBox(size-1, scale -1, '8');
-        setValueBox(1, 1, 'X');
+        setValueBox(size - 2, size - 2, '8');
+        setValueBox(2, 2, 'X');
         
         
     }
@@ -285,7 +286,7 @@ public void generate(int xCord, int yCord) {
     
         
     }
-}
+
 
     
 

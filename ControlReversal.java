@@ -1,4 +1,4 @@
-import javax.swing.Timer;
+/*import javax.swing.Timer;
 
 public class ControlReversal {
     private static boolean reversed = false;

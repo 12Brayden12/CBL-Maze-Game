@@ -8,9 +8,11 @@ import javax.swing.*;
 public class Player extends JPanel implements ActionListener {
     
     private final Board board;
+    private GameActions actions;
 
     public Player(Board board) {
         this.board = board;
+        actions = new GameActions();
       
     }
     MoveLeft lDir = new MoveLeft();
@@ -24,16 +26,32 @@ public class Player extends JPanel implements ActionListener {
 
     public class MyKeyListener extends KeyAdapter { 
         public void keyPressed(KeyEvent e) {
-            if (e.getKeyChar() == 'a') {
-                lDir.moveDirection(board);
-            } else if (e.getKeyChar() =='d') {
-                rDir.moveDirection(board);
-                
-            } else if (e.getKeyChar() == 's') {
-                dDir.moveDirection(board);
+            if (actions.reversed()) {
+                if (e.getKeyChar() == 'a') {
+                    rDir.moveDirection(board);
+                } else if (e.getKeyChar() =='d') {
+                    lDir.moveDirection(board);
+                } else if (e.getKeyChar() == 's') {
+                    uDir.moveDirection(board);
+                    
+                } else  if (e.getKeyChar() == 'w') {
+                    dDir.moveDirection(board);
+                }
                 
             } else {
-                uDir.moveDirection(board);
+                if (e.getKeyChar() == 'a') {
+                    lDir.moveDirection(board);
+                } else if (e.getKeyChar() =='d') {
+                    rDir.moveDirection(board);
+                    
+                } else if (e.getKeyChar() == 's') {
+                    dDir.moveDirection(board);
+                    
+                } else  if (e.getKeyChar() == 'w') {
+                    uDir.moveDirection(board);
+                }
+                
+
             }
 
         }

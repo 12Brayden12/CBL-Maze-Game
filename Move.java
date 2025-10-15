@@ -6,34 +6,41 @@ public class Move {
     private int fruitsCollected;
     private int traps;
     private int fakeFruits;
+    private GameActions gameActions;
+   
 
     
 
     public Move(int dx,int dy) {
+        this.chpos = new Position();
         chpos.setX(1);
         chpos.setY(1);
         this.dx = dx;
         this.dy = dy;
+        this.gameActions = new GameActions();
+        
         
         
 
     }
     public void moveDirection(Board board) {
+        
         if (board.getValue(chpos.getX() + dx, chpos.getY() + dy) != '#' && board.getValue(chpos.getX() +dx , chpos.getY() +dy) != '=') {
             board.setValueBox(chpos.getX(), chpos.getY(), 'o');
             if (board.getValue(chpos.getX()+dx, chpos.getY() +dy) == '8') {
-                Win();
+                gameActions.Win(fruitsCollected);
                 
             } else if (board.getValue(chpos.getX()+dx, chpos.getY() +dy)  == '+') {
                 fruitsCollected++;
+                gameActions.fruitAction();
                 
             } else if (board.getValue(chpos.getX()+dx, chpos.getY() +dy) == '!') {
-                fakeFruitAction();
+                gameActions.fakeFruitAction();
                 fakeFruits++;
                 
             } else if ( board.getValue(chpos.getX()+dx, chpos.getY() +dy) == '@') {
-                trapAction();
-                traps++;
+                gameActions.GameOver();
+                
             } else {
                 board.setValueBox(chpos.getX(), chpos.getY(), 'X');
             }
