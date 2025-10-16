@@ -56,33 +56,33 @@ public class MazeGameGUI {
                 int keyCode = e.getKeyCode();
                 if (actions2.reversed()) {
                     if (e.getKeyChar() == 'w' || keyCode == KeyEvent.VK_UP) {
-                    testPlayer.Move(tester, -1, 0);
+                    testPlayer.Move(tester, 0, +1);
                     
                 } else if (e.getKeyChar() == 's' || keyCode == KeyEvent.VK_DOWN) {
-                    testPlayer.Move(tester, +1, 0);
+                    testPlayer.Move(tester, 0, -1);
                     
                 } else if (e.getKeyChar() == 'd' || keyCode == KeyEvent.VK_RIGHT) {
                     
-                    testPlayer.Move(tester, 0, -1);
+                    testPlayer.Move(tester, -1, 0);
                 } else if (e.getKeyChar() == 'a' || keyCode == KeyEvent.VK_LEFT) {
-                    testPlayer.Move(tester, 0, +1);
+                    testPlayer.Move(tester, +1, 0);
                 }
                     
                 } else {
                 if (e.getKeyChar() == 'w' || keyCode == KeyEvent.VK_UP) {
                     System.out.println("w");
-                    testPlayer.Move(tester, +1, 0);
+                    testPlayer.Move(tester, 0, -1);
                     
                 } else if (e.getKeyChar() == 's' || keyCode == KeyEvent.VK_DOWN) {
                     System.out.println("s");
-                    testPlayer.Move(tester, -1, 0);
+                    testPlayer.Move(tester, 0, +1);
                     
                 } else if (e.getKeyChar() == 'd' || keyCode == KeyEvent.VK_RIGHT) {
                     System.out.println("d");
-                    testPlayer.Move(tester, 0, +1);
+                    testPlayer.Move(tester, +1, 0);
                 } else if (e.getKeyChar() == 'a' || keyCode == KeyEvent.VK_LEFT) {
                     System.out.println("a");
-                    testPlayer.Move(tester, 0, -1);
+                    testPlayer.Move(tester, -1, 0);
                 }
             }   
         }         

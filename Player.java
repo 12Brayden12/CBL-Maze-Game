@@ -30,31 +30,31 @@ public class Player extends JPanel implements ActionListener {
     public class MyKeyListener extends KeyAdapter { 
         public void keyPressed(KeyEvent e) {
             if (actions.reversed()) {
-                if (e.getKeyChar() == 'a') {
-                    Move(board, 0, +1);
-                } else if (e.getKeyChar() == 'd') {
+                if (e.getKeyChar() == 'w') {
                     Move(board, 0, -1);
                 } else if (e.getKeyChar() == 's') {
+                    Move(board, 0, +1);
+                } else if (e.getKeyChar() == 'a') {
                     Move(board, +1, 0);
                     
-                } else  if (e.getKeyChar() == 'w') {
+                } else  if (e.getKeyChar() == 'd') {
                     Move(board, -1, 0);
                     
                 }
                 
             } else {
-                if (e.getKeyChar() == 'a') {
+                if (e.getKeyChar() == 'w') {
                     System.out.println("left");
-                    Move(board, 0, -1);
-                } else if (e.getKeyChar() == 'd') {
-                    System.out.println("right");
                     Move(board, 0, +1);
-                    
                 } else if (e.getKeyChar() == 's') {
+                    System.out.println("right");
+                    Move(board, 0, -1);
+                    
+                } else if (e.getKeyChar() == 'a') {
                     System.out.println("down");
                     Move(board, -1, 0);
                     
-                } else  if (e.getKeyChar() == 'w') {
+                } else  if (e.getKeyChar() == 'd') {
                     System.out.println("up");
                     Move(board, +1,0);
                 }
