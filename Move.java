@@ -1,8 +1,6 @@
 public class Move {
    
     private Position chpos;
-    private int dx;
-    private int dy;
     private int fruitsCollected;
     private int traps;
     private int fakeFruits;
@@ -11,19 +9,12 @@ public class Move {
 
     
 
-    public Move(int dx,int dy) {
+    public Move(Board board, int dx,int dy) {
         this.chpos = new Position();
         chpos.setX(1);
         chpos.setY(1);
-        this.dx = dx;
-        this.dy = dy;
         this.gameActions = new GameActions();
-        
-        
-        
-
-    }
-    public void moveDirection(Board board) {
+   
         
         if (board.getValue(chpos.getX() + dx, chpos.getY() + dy) != '#' && board.getValue(chpos.getX() +dx , chpos.getY() +dy) != '=') {
             board.setValueBox(chpos.getX(), chpos.getY(), 'o');
@@ -38,7 +29,7 @@ public class Move {
                 gameActions.fakeFruitAction();
                 fakeFruits++;
                 
-            } else if ( board.getValue(chpos.getX(), chpos.getY()) == '@') {
+            } else if (board.getValue(chpos.getX(), chpos.getY()) == '@') {
                 gameActions.GameOver();
                 
             } else {

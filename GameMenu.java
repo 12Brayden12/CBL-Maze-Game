@@ -79,6 +79,7 @@ public class GameMenu {
                  * 
                  */
                 mainFrame.dispose();
+                System.out.println('1');
                 new Difficulty2();
 
         }

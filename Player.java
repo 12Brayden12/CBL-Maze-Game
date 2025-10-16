@@ -8,40 +8,41 @@ import javax.swing.*;
 public class Player extends JPanel implements ActionListener {
     
     private final Board board;
+    private Position pos;
+    private int dx;
+    private int dy;
     private GameActions actions;
+    
 
     public Player(Board board) {
         this.board = board;
         actions = new GameActions();
       
     }
-    MoveLeft lDir = new MoveLeft();
-    MoveRight rDir = new MoveRight();
-    MoveDown dDir = new MoveDown();
-    MoveUp uDir = new MoveUp();
+    
 
     public void actionPerformed(ActionEvent e) {
         repaint();
     }
-
     public class MyKeyListener extends KeyAdapter { 
         public void keyPressed(KeyEvent e) {
             if (actions.reversed()) {
                 if (e.getKeyChar() == 'a') {
-                    rDir.moveDirection(board);
-                } else if (e.getKeyChar() =='d') {
-                    lDir.moveDirection(board);
+                    System.out.println("button press");
+                    new Move(board, dx, dy);
+                } else if (e.getKeyChar() == 'd') {
+                    new Move(board, dx, dy);
                 } else if (e.getKeyChar() == 's') {
-                    uDir.moveDirection(board);
+                    new Move(board, dx, dy)
                     
                 } else  if (e.getKeyChar() == 'w') {
-                    dDir.moveDirection(board);
+                    
                 }
                 
             } else {
                 if (e.getKeyChar() == 'a') {
                     lDir.moveDirection(board);
-                } else if (e.getKeyChar() =='d') {
+                } else if (e.getKeyChar() == 'd') {
                     rDir.moveDirection(board);
                     
                 } else if (e.getKeyChar() == 's') {
