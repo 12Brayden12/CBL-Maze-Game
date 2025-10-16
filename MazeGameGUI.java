@@ -101,25 +101,25 @@ public class MazeGameGUI {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("up");
-                        testPlayer.Move(tester, +1, 0);
+                        testPlayer.Move(tester, 0, -1);
                     }
                 },
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("down");
-                        testPlayer.Move(tester, -1, 0);
-                    }
-                },
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        System.out.println("right");
                         testPlayer.Move(tester, 0, +1);
                     }
                 },
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
+                        System.out.println("right");
+                        testPlayer.Move(tester, +1, 0);
+                    }
+                },
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
                         System.out.println("left");
-                        testPlayer.Move(tester,0,-1);
+                        testPlayer.Move(tester,-1,0);
                     }
                 }
             };
