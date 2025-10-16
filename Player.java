@@ -8,15 +8,18 @@ import javax.swing.*;
 public class Player extends JPanel implements ActionListener {
     
     private final Board board;
-    private Position pos;
-    private int dx;
-    private int dy;
+    private Position chpos;
+    private int fruitsCollected;
+    private int fakeFruits;
+
+    
     private GameActions actions;
     
 
     public Player(Board board) {
         this.board = board;
         actions = new GameActions();
+        this.chpos = new Position(1,1);
       
     }
     
@@ -28,28 +31,32 @@ public class Player extends JPanel implements ActionListener {
         public void keyPressed(KeyEvent e) {
             if (actions.reversed()) {
                 if (e.getKeyChar() == 'a') {
-                    System.out.println("button press");
-                    new Move(board, dx, dy);
+                    Move(board, 0, +1);
                 } else if (e.getKeyChar() == 'd') {
-                    new Move(board, dx, dy);
+                    Move(board, 0, -1);
                 } else if (e.getKeyChar() == 's') {
-                    new Move(board, dx, dy)
+                    Move(board, +1, 0);
                     
                 } else  if (e.getKeyChar() == 'w') {
+                    Move(board, -1, 0);
                     
                 }
                 
             } else {
                 if (e.getKeyChar() == 'a') {
-                    lDir.moveDirection(board);
+                    System.out.println("left");
+                    Move(board, 0, -1);
                 } else if (e.getKeyChar() == 'd') {
-                    rDir.moveDirection(board);
+                    System.out.println("right");
+                    Move(board, 0, +1);
                     
                 } else if (e.getKeyChar() == 's') {
-                    dDir.moveDirection(board);
+                    System.out.println("down");
+                    Move(board, -1, 0);
                     
                 } else  if (e.getKeyChar() == 'w') {
-                    uDir.moveDirection(board);
+                    System.out.println("up");
+                    Move(board, +1,0);
                 }
                 
 
@@ -57,5 +64,32 @@ public class Player extends JPanel implements ActionListener {
 
         }
     }
+    public void Move(Board board, int dx,int dy) {
+
+        if (board.getValue(chpos.getX() + dx, chpos.getY() + dy) != '#' && board.getValue(chpos.getX() +dx , chpos.getY() +dy) != '=') {
+            board.setValueBox(chpos.getX(), chpos.getY(), 'o');
+            if (board.getValue(chpos.getX()+dx, chpos.getY()+dy) == '8') {
+                actions.Win(fruitsCollected);
+                
+            } else if (board.getValue(chpos.getX(), chpos.getY())  == '+') {
+                fruitsCollected++;
+                actions.fruitAction();
+                
+            } else if (board.getValue(chpos.getX(), chpos.getY()) == '!') {
+                actions.fakeFruitAction();
+                fakeFruits++;
+                
+            } else if (board.getValue(chpos.getX(), chpos.getY()) == '@') {
+                actions.GameOver();
+                
+            } else {
+                board.setValueBox(chpos.getX(), chpos.getY(), 'X');
+            }
+            
+        }
+
+    }
+
+
     
 }

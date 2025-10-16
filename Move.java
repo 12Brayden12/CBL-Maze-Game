@@ -1,4 +1,4 @@
-public class Move {
+/*public class Move {
    
     private Position chpos;
     private int fruitsCollected;

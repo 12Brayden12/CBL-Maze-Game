@@ -21,11 +21,14 @@ public class MazeGameGUI {
     private String[] positions;
     private ActionListener[] actions;
     private GameActions actions2;
+   
     
 
     public MazeGameGUI(int size,int difficulty, int difficulty1, int difficulty2) {
         tester = new Board(size , size, difficulty, difficulty1, difficulty2);
         testPlayer = new Player(tester);
+        
+
 
         gameFrame = new JFrame();
         mazePanel = new JPanel();
@@ -53,28 +56,33 @@ public class MazeGameGUI {
                 int keyCode = e.getKeyCode();
                 if (actions2.reversed()) {
                     if (e.getKeyChar() == 'w' || keyCode == KeyEvent.VK_UP) {
-                    testPlayer.dDir.moveDirection(tester);
+                    testPlayer.Move(tester, -1, 0);
                     
                 } else if (e.getKeyChar() == 's' || keyCode == KeyEvent.VK_DOWN) {
-                    testPlayer.uDir.moveDirection(tester);
+                    testPlayer.Move(tester, +1, 0);
                     
                 } else if (e.getKeyChar() == 'd' || keyCode == KeyEvent.VK_RIGHT) {
-                    testPlayer.lDir.moveDirection(tester);
+                    
+                    testPlayer.Move(tester, 0, -1);
                 } else if (e.getKeyChar() == 'a' || keyCode == KeyEvent.VK_LEFT) {
-                    testPlayer.rDir.moveDirection(tester);
+                    testPlayer.Move(tester, 0, +1);
                 }
                     
                 } else {
                 if (e.getKeyChar() == 'w' || keyCode == KeyEvent.VK_UP) {
-                    testPlayer.uDir.moveDirection(tester);
+                    System.out.println("w");
+                    testPlayer.Move(tester, +1, 0);
                     
                 } else if (e.getKeyChar() == 's' || keyCode == KeyEvent.VK_DOWN) {
-                    testPlayer.dDir.moveDirection(tester);
+                    System.out.println("s");
+                    testPlayer.Move(tester, -1, 0);
                     
                 } else if (e.getKeyChar() == 'd' || keyCode == KeyEvent.VK_RIGHT) {
-                    testPlayer.rDir.moveDirection(tester);
+                    System.out.println("d");
+                    testPlayer.Move(tester, 0, +1);
                 } else if (e.getKeyChar() == 'a' || keyCode == KeyEvent.VK_LEFT) {
-                    testPlayer.lDir.moveDirection(tester);
+                    System.out.println("a");
+                    testPlayer.Move(tester, 0, -1);
                 }
             }   
         }         
@@ -92,22 +100,26 @@ public class MazeGameGUI {
         actions = new ActionListener[] {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        testPlayer.uDir.moveDirection(tester);
+                        System.out.println("up");
+                        testPlayer.Move(tester, +1, 0);
                     }
                 },
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        testPlayer.dDir.moveDirection(tester);
+                        System.out.println("down");
+                        testPlayer.Move(tester, -1, 0);
                     }
                 },
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        testPlayer.rDir.moveDirection(tester);
+                        System.out.println("right");
+                        testPlayer.Move(tester, 0, +1);
                     }
                 },
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        testPlayer.lDir.moveDirection(tester);
+                        System.out.println("left");
+                        testPlayer.Move(tester,0,-1);
                     }
                 }
             };
