@@ -102,7 +102,7 @@ public class Board extends JPanel {
                     g.fillOval(row*pixel, col*pixel, pixel, pixel);
                 } else if (entireBoard[row][col] == '!') {
                     g.setColor(Color.RED);
-                    g.fillOval(row*pixel, col*col, pixel, pixel);
+                    g.fillOval(row*pixel, col*pixel, pixel, pixel);
                     
                 } else if (entireBoard[row][col] == '@') {
                     g.setColor(Color.PINK);
@@ -129,20 +129,22 @@ public class Board extends JPanel {
     }
     public void addGameObject(char symbol, int amount) {
         Random location = new Random();
-        Position pos = new Position(0,0);
         int randX; 
         int randY;
         for (int i =0; i < amount; i++) {
+            Position pos = new Position(0,0);
+
             while (pos.getX() == 0 || pos.getY() == 0) {
             randX = location.nextInt(size);
             randY = location.nextInt(size);
-            if (randX%2 != 0 && (randX != 0 || randX != size)) {
+
+            if (randX%2 != 0 && randX != 0 && randX != size-1) {
                 pos.setX(randX);
             }
-            if (randY%2 != 0 && (randY != 0 || randY != size)) {
+            if (randY%2 != 0 && randY != 0 && randY != size-1) {
                 pos.setY(randY);
             }
-            if (getValue(pos.getX(), pos.getY()) == 'X' || getValue(pos.getX(), pos.getY()) == '8') {
+            if (getValue(pos.getX(), pos.getY()) != 'v') {
                 pos.setX(0);
                 pos.setY(0);
             }
