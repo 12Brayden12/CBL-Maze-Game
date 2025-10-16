@@ -23,8 +23,8 @@ public class MazeGameGUI {
     private GameActions actions2;
     
 
-    public MazeGameGUI(int difficulty, int difficulty1, int difficulty2) {
-        tester = new Board(10, 10, difficulty, difficulty1, difficulty2);
+    public MazeGameGUI(int size,int difficulty, int difficulty1, int difficulty2) {
+        tester = new Board(size , size, difficulty, difficulty1, difficulty2);
         testPlayer = new Player(tester);
 
         gameFrame = new JFrame();
@@ -82,13 +82,8 @@ public class MazeGameGUI {
     
         gameFrame.add(mazePanel,BorderLayout.CENTER);
 
-   
-    
         bottomPanel.setLayout(new BorderLayout());
         bottomPanel.setBackground(Color.WHITE);
-        
-        
-        
 
         buttons = new JButton[4];
         buttonNames = new String[] {"Up","Down","Right","Left"};

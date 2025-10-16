@@ -1,6 +1,5 @@
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.text.Position;
 import javax.swing.text.html.parser.Entity;
 
 import java.math.*;
@@ -12,8 +11,8 @@ public class Board extends JPanel {
     private char[][] entireBoard;
     private int size;
     private int unVisited;
-    private int scale;
-    private Position currentCell;
+    private int scale=1;
+    
 
     
     ArrayDeque<Position> positions = new ArrayDeque<>();
@@ -21,20 +20,25 @@ public class Board extends JPanel {
     public Board(int x, int y, int fruitC,int fakeFruitC, int trapC) {
         initializeBoard(x, y);
         codeMaze();
-
-        Fruit fruits = new Fruit();
-        FakeFruit fakeFruits = new FakeFruit();
-        Trap traps = new Trap();
-
-        fruits.add(this, fruitC);
-        fakeFruits.add(this, fakeFruitC);
-        traps.add(this, trapC);
-
-
+        addGameObject('+', fruitC);
+        addGameObject('!', fakeFruitC);
+        addGameObject('@', trapC);
         
+    }
+    
+    
 
+    public void initializeBoard(int width, int length) {
+        unVisited = (width*width);
+        width *= 2;
+        width++;
+        length *= 2;
+        length++;
+        scale = length;
+        entireBoard = new char[width][length];
+        size = width;
         
-
+        
 
     }
     public void codeMaze() {
@@ -58,20 +62,6 @@ public class Board extends JPanel {
         }
         generate(1, 1);
     }
-
-
-
-    public void initializeBoard(int width, int length) {
-        unVisited = width*width;
-        width = width*2 + 1;
-        length = length*2 +1;
-        scale = length;
-        entireBoard = new char[width][length];
-        size = width;
-        currentCell = new Position(1,1);
-        
-
-    }
     public int boardSize() {
         return size;
     }
@@ -88,9 +78,7 @@ public class Board extends JPanel {
 
     public void paint(Graphics g) {
         super.paint(g);
-        int currentWidth = getWidth();
-        int currentHeight = getHeight();
-        int pixel = Math.min(currentWidth/size, currentHeight/size);
+        int pixel = 500/(scale+10);
 
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
@@ -111,15 +99,14 @@ public class Board extends JPanel {
                     g.fillRect(row*pixel, col*pixel, pixel, pixel);
                 } else if (entireBoard[row][col] =='+') {
                     g.setColor(Color.YELLOW);
-                    g.fillOval(pixel*row, col*pixel, pixel, pixel);
+                    g.fillOval(row*pixel, col*pixel, pixel, pixel);
                 } else if (entireBoard[row][col] == '!') {
                     g.setColor(Color.RED);
-                    g.fillOval(pixel*row, col*col, pixel, pixel);
+                    g.fillOval(row*pixel, col*col, pixel, pixel);
                     
                 } else if (entireBoard[row][col] == '@') {
                     g.setColor(Color.PINK);
-
-                    g.fillOval(pixel*row, col*pixel, pixel, pixel);
+                    g.fillOval(row*pixel, col*pixel, pixel, pixel);
                 }
                 
                 
@@ -140,6 +127,31 @@ public class Board extends JPanel {
             System.out.println("");
         }
     }
+    public void addGameObject(char symbol, int amount) {
+        Random location = new Random();
+        Position pos = new Position(0,0);
+        int randX; 
+        int randY;
+        for (int i =0; i < amount; i++) {
+            while (pos.getX() == 0 || pos.getY() == 0) {
+            randX = location.nextInt(size);
+            randY = location.nextInt(size);
+            if (randX%2 != 0 && (randX != 0 || randX != size)) {
+                pos.setX(randX);
+            }
+            if (randY%2 != 0 && (randY != 0 || randY != size)) {
+                pos.setY(randY);
+            }
+            if (getValue(pos.getX(), pos.getY()) == 'X' || getValue(pos.getX(), pos.getY()) == '8') {
+                pos.setX(0);
+                pos.setY(0);
+            }
+        }
+            
+        setValueBox(pos.getX(), pos.getY(),symbol);
+        }
+    }
+    
     public class Position {
     private int xCord;
     private int yCord; 
@@ -167,39 +179,104 @@ public class Board extends JPanel {
     
 }
 
-public char[] directionUpdate(Position currentCell) {
-    char north = 0;
-    char south = 0;
-    char west = 0;
-    char east = 0;
-    int x = currentCell.getX() -1;
-    int y = currentCell.getY() -1;
-    if (getValue(currentCell.getX(), currentCell.getY() +1) != '#') {
-        east = getValue(currentCell.getX(),currentCell.getY() +2);
-
-    }
-    if (getValue(currentCell.getX() +1, currentCell.getY()) != '#') {
-        north = getValue(currentCell.getX() +2 ,currentCell.getY() );
-
-    }
-    if (x > 0 && getValue(currentCell.getX()-1 , currentCell.getY()) != '#'){ 
-        south = getValue(currentCell.getX() -2,currentCell.getY());
-
-    }
-    if ( y > 0 && getValue(currentCell.getX(), currentCell.getY() -1) != '#') {
-
-        west = getValue(currentCell.getX(),currentCell.getY() -2);
-    }
-    char[] direction = {west,east,north,south};
-    return direction;
-}
+public char[] directionUpdate(Position currentCell){
+		char north=0,south=0,east=0,west=0;
+		
+		if (getValue(currentCell.getX(),currentCell.getY()+1) != '#')
+			east = getValue(currentCell.getX(), currentCell.getY()+2);
+		if (getValue(currentCell.getX(),currentCell.getY()-1) != '#')
+			west = getValue(currentCell.getX(), currentCell.getY()-2);
+		if (getValue(currentCell.getX()-1,currentCell.getY()) != '#')
+			north = getValue(currentCell.getX()-2, currentCell.getY());
+		if (getValue(currentCell.getX()+1,currentCell.getY()) != '#')
+			south = getValue(currentCell.getX()+2, currentCell.getY());		
+		char direction[] = {west,east,south,north};
+		return direction;
+	}
+Position posList[] = new Position[(2*(getX()/2))];
+ Position currentCell = new Position(5,5);
 
 /*A class responsible for generating a random maze 
  * 
 */
-public void generate(int xCord, int yCord) {
+public void generate(int posX, int posY){
+		currentCell = new Position(posX,posY);
+		setValueBox(currentCell.getX(),currentCell.getY(), 'v');
+		unVisited-=1;
+		
+		char north=0,south=0,east=0,west=0;
+		char direction[] = {west,east,south,north};
+		
+		direction = directionUpdate(currentCell);
+
+		while(unVisited != 0){
+			int free = 0;
+			if((direction[0] == 'u') || (direction[1] == 'u') || (direction[2] == 'u') || (direction[3] == 'u'))
+				free = 1;
+			
+			Random generator = new Random();
+			int random = generator.nextInt(4);
+			setValueBox(currentCell.getX(),currentCell.getY(), 'v');
+		
+			if((random == 0) && (direction[0] == 'u')){ //West
+				if (getValue(currentCell.getX(),currentCell.getY()-1) != '#'){
+					setValueBox(currentCell.getX(), currentCell.getY()-1, 'v');
+					currentCell = new Position(currentCell.getX(), currentCell.getY()-2);
+					positions.push(currentCell);
+					
+					direction = directionUpdate(currentCell);
+					unVisited--;
+					
+				}
+			}
+			else if((random == 1) && (direction[1] == 'u')){ //East
+				if (getValue(currentCell.getX(),currentCell.getY()+1) != '#'){
+					setValueBox(currentCell.getX(), currentCell.getY()+1, 'v');
+					currentCell = new Position(currentCell.getX(), currentCell.getY()+2);
+					positions.push(currentCell);
+					
+					direction = directionUpdate(currentCell);
+					unVisited--;
+				}
+			}
+			
+			else if((random == 2) && (direction[2] == 'u')){ //South
+				if (getValue(currentCell.getX()+1,currentCell.getY()) != '#'){
+					setValueBox(currentCell.getX()+1, currentCell.getY(), 'v');
+					currentCell = new Position(currentCell.getX()+2, currentCell.getY());
+					positions.push(currentCell);
+					
+					direction = directionUpdate(currentCell);
+					unVisited--;
+					
+				}
+			}
+			else if((random == 3) && (direction[3] == 'u')){ //North
+				if (getValue(currentCell.getX()-1,currentCell.getY()) != '#'){
+					setValueBox(currentCell.getX()-1, currentCell.getY(), 'v');
+					currentCell = new Position(currentCell.getX()-2, currentCell.getY());
+					positions.push(currentCell);
+					
+					direction = directionUpdate(currentCell);
+					unVisited--;
+					
+				}
+			} else {
+				if(free == 0 && positions.size() != 0){
+					currentCell = positions.getLast();
+					positions.removeLast();
+					direction = directionUpdate(currentCell);
+					
+					
+				}
+			}
+		}
+		setValueBox(currentCell.getX(),currentCell.getY(),'8');
+		setValueBox(1,1,'X');
+	}
+/*public void generate(int xCord, int yCord) {
     currentCell = new Position(xCord,yCord);
-    setValueBox(xCord, yCord, 'v');
+    setValueBox(currentCell.getX(), currentCell.getY(), 'v');
     unVisited = unVisited - 1;
     
     int full;
@@ -208,43 +285,42 @@ public void generate(int xCord, int yCord) {
     char south = 0;
     char west = 0;
     char east = 0;
-    char[] direction = new char[4];
-    direction[0] = north;
-    direction[1] = south;
-    direction[2] = west;
-    direction[3] = east;
+    char direction[] = {west,east,south,north};
+
+    
 
     direction = directionUpdate(currentCell);
 
     while (unVisited != 0) {
         full = 0;
-        if (direction[0] == 'u' || direction[1] == 'u' || direction[2] == 'u' || direction[3] == 'u') {
+        if ((direction[0] == 'u' || direction[1] == 'u' || direction[2] == 'u' || direction[3] == 'u')) 
             full = 1;
-        }
+        
+        
         randomGenerator = new Random();
         int randomDirection = randomGenerator.nextInt(4);
-
+        
         if (randomDirection == 0 && direction[0] == 'u') {
-            if (getValue(currentCell.getX()-1, currentCell.getY()) != '#') {
-                setValueBox(currentCell.getX()-1, currentCell.getY(), 'v');
-                currentCell = new Position(currentCell.getX()-2,currentCell.getY());
+            if (getValue(currentCell.getX(), currentCell.getY()-1) != '#') {
+                setValueBox(currentCell.getX(), currentCell.getY()-1, 'v');
+                currentCell = new Position(currentCell.getX(),currentCell.getY()-2);
                 positions.push(currentCell);
                 direction = directionUpdate(currentCell);
                 unVisited--;
                 
             } 
-         }  else if (randomDirection == 1 && direction[1] == 'u') {
-                if (getValue(currentCell.getX()+1, currentCell.getY()) != '#') {
-                    setValueBox(currentCell.getX()+1, currentCell.getY(), 'v');
-                    currentCell = new Position(currentCell.getX()+2,currentCell.getY());
+         }  else if ((randomDirection == 1) && (direction[1] == 'u')) {
+                if (getValue(currentCell.getX(), currentCell.getY()+1) != '#') {
+                    setValueBox(currentCell.getX(), currentCell.getY()+1, 'v');
+                    currentCell = new Position(currentCell.getX(),currentCell.getY()+2);
                     positions.push(currentCell);
                     direction = directionUpdate(currentCell);
                     unVisited--;
                     }
-        } else if (randomDirection == 2 && direction[2] == 'u') {
-                if (getValue(currentCell.getX(), currentCell.getY()-1) != '#') {
-                    setValueBox(currentCell.getX(), currentCell.getY()-1, 'v');
-                    currentCell = new Position(currentCell.getX(),currentCell.getY()-2);
+        } else if ((randomDirection == 2) && (direction[2] == 'u')) {
+                if (getValue(currentCell.getX()+1, currentCell.getY()) != '#') {
+                    setValueBox(currentCell.getX()+1, currentCell.getY(), 'v');
+                    currentCell = new Position(currentCell.getX()+2,currentCell.getY());
                     positions.push(currentCell);
                     
                     direction = directionUpdate(currentCell);
@@ -252,10 +328,10 @@ public void generate(int xCord, int yCord) {
                     
                 }
                 
-         } else if (randomDirection == 3 && direction[3] == 'u') {
-                if (getValue(currentCell.getX(), currentCell.getY()+1) != '#') {
-                    setValueBox(currentCell.getX(), currentCell.getY()+1, 'v');
-                    currentCell = new Position(currentCell.getX(),currentCell.getY()+2);
+         } else if ((randomDirection == 3) && (direction[3] == 'u')) {
+                if (getValue(currentCell.getX()+1, currentCell.getY()) != '#') {
+                    setValueBox(currentCell.getX()+1, currentCell.getY(), 'v');
+                    currentCell = new Position(currentCell.getX()-2,currentCell.getY());
                     positions.push(currentCell);
 
                     direction = directionUpdate(currentCell);
@@ -264,7 +340,8 @@ public void generate(int xCord, int yCord) {
                 }
         } else {
                 if (full == 0 && positions.size() != 0) {
-                    currentCell = positions.pop();
+                    currentCell = positions.getLast();
+                    positions.removeLast();
 
                     direction = directionUpdate(currentCell);
                     
@@ -273,11 +350,11 @@ public void generate(int xCord, int yCord) {
             
             
         }
-        setValueBox(size - 2, size - 2, '8');
-        setValueBox(2, 2, 'X');
+        setValueBox(currentCell.getX(),currentCell.getY(), '8');
+        setValueBox(1, 1, 'X');
         
         
-    }
+    } */
 
 
 

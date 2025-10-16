@@ -30,15 +30,15 @@ public class Move {
             if (board.getValue(chpos.getX()+dx, chpos.getY() +dy) == '8') {
                 gameActions.Win(fruitsCollected);
                 
-            } else if (board.getValue(chpos.getX()+dx, chpos.getY() +dy)  == '+') {
+            } else if (board.getValue(chpos.getX(), chpos.getY())  == '+') {
                 fruitsCollected++;
                 gameActions.fruitAction();
                 
-            } else if (board.getValue(chpos.getX()+dx, chpos.getY() +dy) == '!') {
+            } else if (board.getValue(chpos.getX(), chpos.getY()) == '!') {
                 gameActions.fakeFruitAction();
                 fakeFruits++;
                 
-            } else if ( board.getValue(chpos.getX()+dx, chpos.getY() +dy) == '@') {
+            } else if ( board.getValue(chpos.getX(), chpos.getY()) == '@') {
                 gameActions.GameOver();
                 
             } else {
