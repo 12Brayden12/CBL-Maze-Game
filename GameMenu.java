@@ -47,6 +47,7 @@ public class GameMenu {
        play.setMaximumSize(buttonSize);
        play.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent ae) {
+                /*
                 Difficulty.GameSettings settings = Difficulty.chooseDifficulty();
                 if (settings == null) return; 
                 System.out.println("Fake Fruits: " + settings.fakeFruitCount);
@@ -61,6 +62,25 @@ public class GameMenu {
                 gameFrame.add(gameBoard);
 
                 gameFrame.setVisible(true);
+                Difficulty.GameSettings settings = Difficulty.chooseDifficulty();
+                if (settings == null) return; 
+                System.out.println("Fake Fruits: " + settings.fakeFruitCount);
+                System.out.println("Traps: " + settings.trapCount);
+                System.out.println("Time Limit: " + settings.timeLimit);
+
+                JFrame gameFrame = new JFrame("Maze Game");
+                gameFrame.setSize(500, 500);
+                gameFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+                Board gameBoard = new Board(10, 10, 10, settings.fakeFruitCount, settings.trapCount);
+                gameFrame.add(gameBoard);
+
+                gameFrame.setVisible(true);
+                 * 
+                 */
+                mainFrame.dispose();
+                System.out.println('1');
+                new Difficulty2();
 
         }
        });
@@ -114,10 +134,8 @@ public class GameMenu {
            tutorialFrame.add(scrollPane, BorderLayout.CENTER);
            tutorialFrame.setVisible(true);
     }
-    public static void main(String[] args) {
-        new GameMenu();
-    }
-      
+    
+ 
     
 
 
