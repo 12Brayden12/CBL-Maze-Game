@@ -78,10 +78,12 @@ public class Player extends JPanel implements ActionListener {
             } else if (board.getValue(chpos.getX(), chpos.getY())  == '+') {
                 fruitsCollected++;
                 actions.fruitAction();
+                board.setValueBox(chpos.getX(), chpos.getY(), 'X');
                 
             } else if (board.getValue(chpos.getX(), chpos.getY()) == '!') {
                 actions.fakeFruitAction();
                 fakeFruits++;
+                board.setValueBox(chpos.getX(), chpos.getY(), 'X');
                 
             } else if (board.getValue(chpos.getX(), chpos.getY()) == '@') {
                 actions.GameOver();

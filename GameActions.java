@@ -60,6 +60,8 @@ public class GameActions {
         fail.setVisible(true);
 
     }
+
+    
      public void fruitAction() {
         score += 50;
      }
@@ -67,6 +69,7 @@ public class GameActions {
         return score;
      }
      public void fakeFruitAction() {
+        if(controlsReversed) return;
         controlsReversed = true;
         int duration = 10000;
         Timer time = new Timer(duration, new ActionListener() {
