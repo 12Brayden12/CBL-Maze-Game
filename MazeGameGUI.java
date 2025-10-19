@@ -16,19 +16,28 @@ public class MazeGameGUI {
     private JPanel mazePanel;
     private JPanel topPanel;
     private JPanel bottomPanel;
+    private JPanel centralbuttons;
+    private JButton newGame;
+    private JButton menu;
     private JButton[] buttons;
     private String[] buttonNames;
     private String[] positions;
     private String[] reversedPositions;
     private ActionListener[] actions;
     private GameActions gameactions;
+    private TimerAndScore scores;
+    
 
    
     
 
     public MazeGameGUI(int size,int difficulty, int difficulty1, int difficulty2) {
         tester = new Board(size , size, difficulty, difficulty1, difficulty2);
-        testPlayer = new Player(this,tester);
+        scores = new TimerAndScore(tester,this);
+        scores.timerStart();
+
+        testPlayer = new Player(this,tester,scores);
+        
         
 
 
@@ -36,7 +45,10 @@ public class MazeGameGUI {
         mazePanel = new JPanel();
         topPanel = new JPanel();
         bottomPanel = new JPanel();
-        gameactions = new GameActions(this, tester);
+        gameactions = new GameActions(this, tester,scores);
+        centralbuttons = new JPanel();
+        newGame = new JButton();
+        menu = new JButton();
         
         gameFrame.setTitle("Maze Game");
         gameFrame.setLayout(new BorderLayout());
@@ -132,14 +144,41 @@ public class MazeGameGUI {
                 bottomPanel.add(buttons[i],positions[i]);
                 
             }
-           
+        centralbuttons.setLayout(new FlowLayout());
+        centralbuttons.setBackground(Color.WHITE);
+        
+        newGame.setText("New Game");
+        menu.setText("Menu");
+        newGame.setAlignmentX(Component.CENTER_ALIGNMENT);
+        menu.setAlignmentX(Component.CENTER_ALIGNMENT);
+        newGame.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                gameFrame.dispose();
+                new MazeGameGUI(size, difficulty, difficulty1, difficulty2);
+            }
+        });
+        menu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                gameFrame.dispose();
+                new GameMenu();
+            }
+        });
+        centralbuttons.add(newGame);
+        centralbuttons.add(menu);
+
+        bottomPanel.add(centralbuttons,BorderLayout.CENTER);
         
         
         gameFrame.add(bottomPanel, BorderLayout.SOUTH);
     
         topPanel.setLayout(new FlowLayout());
-        topPanel.setBackground(Color.BLACK);
+        topPanel.setBackground(Color.WHITE);
+        topPanel.add(scores.getFakeFruits());
+        topPanel.add(scores.getScoreLabel());
+        topPanel.add(scores.getTimeLabel());
+
         gameFrame.add(topPanel,BorderLayout.NORTH);
+        scores.timerStart();
    
         gameFrame.setVisible(true);
         mazePanel.requestFocusInWindow();
@@ -157,6 +196,8 @@ public class MazeGameGUI {
         } else if (panel == 't') {
             return topPanel;
             
+        } else if (panel == 'c') {
+            return centralbuttons;
         } else {
             return bottomPanel;
         }

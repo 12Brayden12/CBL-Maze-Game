@@ -7,40 +7,44 @@ import javax.swing.*;
 
 public class GameActions {
     private Board board;
+    private Timer timeReversed;
     private JFrame win;
     private JFrame fail;
     private JLabel winLabel;
     private JLabel failLabel;
     private JLabel scoreLabel;
-    private  int score;
+    private JPanel topPanel;
+    private TimerAndScore scores;
     private static boolean controlsReversed;
     Font font;
     private MazeGameGUI mainFrame;
 
-    public GameActions(MazeGameGUI gui, Board board) {
+    public GameActions(MazeGameGUI gui, Board board,TimerAndScore scores) {
         this.board = board;
         mainFrame = gui;
-        this.controlsReversed = false;
+        controlsReversed = false;
+        this.scores = scores;
+
         
+        topPanel = mainFrame.getPanel('t');
+
         font = new Font("Verdana", Font.BOLD, 40);
         winLabel = new JLabel();
         failLabel = new JLabel();
         scoreLabel = new JLabel();
+        
+        
     }
-
-
-    
-    
-    
-    public void Win(int score) {
-            this.score = score;
-
+    public void Win() {
+            int finalScore = scores.finalScore();
+            scores.timerStop();
+            
+            scoreLabel.setText("Your final score is: " + finalScore);
             win = new JFrame("Win!");
             mainFrame.getFrame().dispose();
             winLabel.setText("Congratulations!!! You successfully reached the end of the game!!");
             winLabel.setFont(font);
             
-            scoreLabel.setText("Your score " );
             BoxLayout boxlayout = new BoxLayout(win.getContentPane(), BoxLayout.Y_AXIS);
             win.setLayout(boxlayout);
             win.setBackground(Color.WHITE);
@@ -81,17 +85,16 @@ public class GameActions {
 
     }
 
-    
      public void fruitAction() {
-        score += 50;
-     }
-     public int score() {
-        return score;
-     }
+        scores.fruits();
+    }
+    
      public void fakeFruitAction() {
         if(controlsReversed) {
             return;
         }
+       
+        scores.fakeFruit();
         
         mainFrame.getPanel('b').removeAll();
         mainFrame.getFrame().repaint();
@@ -106,6 +109,7 @@ public class GameActions {
             mainFrame.getPanel('b').add(reversedbButtons[i],positions2[i]);
         }
         mainFrame.getFrame().add(mainFrame.getPanel('b'),BorderLayout.SOUTH);
+        mainFrame.getPanel('b').add(mainFrame.getPanel('c'),BorderLayout.CENTER);
         mainFrame.getFrame().revalidate();
         mainFrame.getPanel('b').repaint();
         mainFrame.getFrame().repaint();
@@ -114,7 +118,7 @@ public class GameActions {
         
         controlsReversed = true;
         int duration = 10000;
-        Timer time = new Timer(duration, new ActionListener() {
+        timeReversed = new Timer(duration, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controlsReversed = false;
                 for ( int i = 0; i < buttonNames.length; i++) {
@@ -123,6 +127,7 @@ public class GameActions {
 
                 }
                 mainFrame.getFrame().add(mainFrame.getPanel('b'),BorderLayout.SOUTH);
+                mainFrame.getPanel('b').add(mainFrame.getPanel('c'),BorderLayout.CENTER);
                 mainFrame.getFrame().revalidate();
                 mainFrame.getPanel('b').repaint();
                 mainFrame.getFrame().repaint();
@@ -131,8 +136,8 @@ public class GameActions {
             
             
         });
-        time.setRepeats(false);
-        time.start();
+        timeReversed.setRepeats(false);
+        timeReversed.start();
     }
     public boolean reversed() {
         return controlsReversed;
