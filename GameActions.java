@@ -8,7 +8,6 @@ import javax.sound.sampled.*;
 import java.io.File;
 
 public class GameActions {
-    private Board board;
     private Timer timeReversed;
     private JFrame win;
     private JFrame fail;
@@ -21,7 +20,7 @@ public class GameActions {
     private MazeGameGUI mainFrame;
 
     public GameActions(MazeGameGUI gui, Board board,TimerAndScore scores) {
-        this.board = board;
+        
         mainFrame = gui;
         controlsReversed = false;
         this.scores = scores;
@@ -92,11 +91,9 @@ public class GameActions {
      }
      
      public void fakeFruitAction() {
-        if(controlsReversed) {
-            return;
-        }
-       
+        
         scores.fakeFruit();
+        playSound("fakefruit.wav");
         
         mainFrame.getPanel('b').removeAll();
         mainFrame.getFrame().repaint();
@@ -119,8 +116,11 @@ public class GameActions {
 
         
         controlsReversed = true;
-        playSound("fakefruit.wav");
+        
         int duration = 10000;
+        if (timeReversed != null && timeReversed.isRunning()) {
+            timeReversed.stop();
+        }
         timeReversed = new Timer(duration, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controlsReversed = false;

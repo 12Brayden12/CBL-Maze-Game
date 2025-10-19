@@ -21,7 +21,7 @@ public class TimerAndScore {
         this.fakeFruitsCollected = 0;
         actions = new GameActions(gui, board ,this);
         
-        remainingTime = 10;
+        remainingTime = 25;
         scoreLabel = new JLabel();
         scoreLabel.setText("Your score is: 0");
         
