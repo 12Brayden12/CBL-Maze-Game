@@ -15,18 +15,35 @@ public class GameActions {
     private JLabel failLabel;
     private JLabel scoreLabel;
     private  int score;
-    private boolean controlsReversed;
-    Font font = new Font("Verdana", Font.BOLD, 40);
+    private static boolean controlsReversed;
+    Font font;
+    private MazeGameGUI mainFrame;
+
+    public GameActions(MazeGameGUI gui, Board board) {
+        this.board = board;
+        mainFrame = gui;
+        this.controlsReversed = false;
+        
+        font = new Font("Verdana", Font.BOLD, 40);
+        winLabel = new JLabel();
+        failLabel = new JLabel();
+        scoreLabel = new JLabel();
+    }
+
+
+    
     
     
     public void Win(int score) {
+            this.score = score;
+
             win = new JFrame("Win!");
-            winLabel = new JLabel();
+            mainFrame.getFrame().dispose();
             winLabel.setText("Congratulations!!! You successfully reached the end of the game!!");
             winLabel.setFont(font);
-            scoreLabel = new JLabel();
+            
             scoreLabel.setText("Your score " );
-            BoxLayout boxlayout = new BoxLayout(win, BoxLayout.Y_AXIS);
+            BoxLayout boxlayout = new BoxLayout(win.getContentPane(), BoxLayout.Y_AXIS);
             win.setLayout(boxlayout);
             win.setBackground(Color.WHITE);
             win.add(Box.createVerticalGlue());
@@ -38,10 +55,13 @@ public class GameActions {
             win.setResizable(true);
             win.setLocationRelativeTo(null);
             win.setVisible(true);
-
+            
 
     }
     public void GameOver() {
+        
+        
+        mainFrame.getFrame().dispose();
         fail = new JFrame("Game Over");
         fail.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fail.setSize(500,500);
@@ -50,7 +70,7 @@ public class GameActions {
       
 
 
-        failLabel = new  JLabel();
+        
         failLabel.setText("Game Over!!!");
         failLabel.setFont(font);
         failLabel.setBackground(Color.BLACK);
@@ -72,14 +92,47 @@ public class GameActions {
         return score;
      }
      public void fakeFruitAction() {
-        if(controlsReversed) return;
+        if(controlsReversed) {
+            return;
+        }
+        
+        mainFrame.getPanel('b').removeAll();
+        mainFrame.getFrame().repaint();
+        JButton[] reversedbButtons = mainFrame.getButtons();
+        String[] original = mainFrame.getPositions('o');
+        String[] positions2 = mainFrame.getPositions('r');
+        String[] buttonNames = mainFrame.getNames();
+        
+        for ( int i = 0; i < buttonNames.length; i++) {
+
+            reversedbButtons[i].setFocusable(false);
+            mainFrame.getPanel('b').add(reversedbButtons[i],positions2[i]);
+        }
+        mainFrame.getFrame().add(mainFrame.getPanel('b'),BorderLayout.SOUTH);
+        mainFrame.getFrame().revalidate();
+        mainFrame.getPanel('b').repaint();
+        mainFrame.getFrame().repaint();
+
+
+        
         controlsReversed = true;
         playSound("fakefruit.wav");
         int duration = 10000;
         Timer time = new Timer(duration, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controlsReversed = false;
+                for ( int i = 0; i < buttonNames.length; i++) {
+                    reversedbButtons[i].setFocusable(false);
+                    mainFrame.getPanel('b').add(reversedbButtons[i],original[i]);
+
+                }
+                mainFrame.getFrame().add(mainFrame.getPanel('b'),BorderLayout.SOUTH);
+                mainFrame.getFrame().revalidate();
+                mainFrame.getPanel('b').repaint();
+                mainFrame.getFrame().repaint();
+
             }
+            
             
         });
         time.setRepeats(false);

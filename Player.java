@@ -11,15 +11,17 @@ public class Player extends JPanel implements ActionListener {
     private Position chpos;
     private int fruitsCollected;
     private int fakeFruits;
+    private MazeGameGUI gui;
 
     
     private GameActions actions;
     
 
-    public Player(Board board) {
+    public Player(MazeGameGUI gui,Board board) {
         this.board = board;
-        actions = new GameActions();
+        actions = new GameActions(gui,board);
         this.chpos = new Position(1,1);
+        this.gui = gui;
       
     }
     
@@ -65,7 +67,7 @@ public class Player extends JPanel implements ActionListener {
         }
     }
     public void Move(Board board, int dx,int dy) {
-
+        this.gui = gui;
         if (board.getValue(chpos.getX() + dx, chpos.getY() + dy) != '#' && board.getValue(chpos.getX() +dx , chpos.getY() +dy) != '=') {
             board.setValueBox(chpos.getX(), chpos.getY(), 'o');
 
@@ -74,6 +76,7 @@ public class Player extends JPanel implements ActionListener {
 
             if (board.getValue(chpos.getX(), chpos.getY()) == '8') {
                 actions.Win(fruitsCollected);
+                
                 
             } else if (board.getValue(chpos.getX(), chpos.getY())  == '+') {
                 fruitsCollected++;

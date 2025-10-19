@@ -78,7 +78,9 @@ public class Board extends JPanel {
 
     public void paint(Graphics g) {
         super.paint(g);
-        int pixel = 500/(scale+10);
+        int width = getWidth();
+        int height = getHeight();
+        int pixel = Math.min(width, height) / scale; 
 
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
@@ -154,32 +156,6 @@ public class Board extends JPanel {
         }
     }
     
-    public class Position {
-    private int xCord;
-    private int yCord; 
-    public Position(int x, int y) {
-        this.xCord = x;
-        this.yCord = y;
-    }
-    public Position() {
-        this.xCord = 0;
-        this.yCord = 0;
-    }
-    public int getX() {
-        return xCord;
-    }
-    public int getY() { 
-        return yCord;
-    }
-    public void setX(int x) {
-        this.xCord = x;
-    }
-    public void setY(int y) {
-        this.yCord = y;
-    }
-
-    
-}
 
 public char[] directionUpdate(Position currentCell){
 		char north=0,south=0,east=0,west=0;

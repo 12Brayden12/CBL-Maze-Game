@@ -47,7 +47,7 @@ public class Difficulty2 {
                 frame.dispose();
                 int size = 10;
                 int easyFruit = 0;
-                int easyFakeFruit = 0;
+                int easyFakeFruit = 20;
                 int easyTraps = 0;
                 new MazeGameGUI(size,easyFruit, easyFakeFruit, easyTraps);
             }
@@ -65,7 +65,7 @@ public class Difficulty2 {
         medium.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                int size = 15;
+                int size = 100;
                 int mediumFruit = 7;
                 int mediumFakeFruit = 5;
                 int mediumTraps = 4;

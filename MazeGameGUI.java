@@ -19,14 +19,16 @@ public class MazeGameGUI {
     private JButton[] buttons;
     private String[] buttonNames;
     private String[] positions;
+    private String[] reversedPositions;
     private ActionListener[] actions;
-    private GameActions actions2;
+    private GameActions gameactions;
+
    
     
 
     public MazeGameGUI(int size,int difficulty, int difficulty1, int difficulty2) {
         tester = new Board(size , size, difficulty, difficulty1, difficulty2);
-        testPlayer = new Player(tester);
+        testPlayer = new Player(this,tester);
         
 
 
@@ -34,7 +36,7 @@ public class MazeGameGUI {
         mazePanel = new JPanel();
         topPanel = new JPanel();
         bottomPanel = new JPanel();
-        actions2 = new GameActions();
+        gameactions = new GameActions(this, tester);
         
         gameFrame.setTitle("Maze Game");
         gameFrame.setLayout(new BorderLayout());
@@ -54,7 +56,7 @@ public class MazeGameGUI {
             
             public void keyPressed(KeyEvent e ) {
                 int keyCode = e.getKeyCode();
-                if (actions2.reversed()) {
+                if (gameactions.reversed()) {
                     if (e.getKeyChar() == 'w' || keyCode == KeyEvent.VK_UP) {
                     testPlayer.Move(tester, 0, +1);
                     
@@ -96,7 +98,7 @@ public class MazeGameGUI {
         buttons = new JButton[4];
         buttonNames = new String[] {"Up","Down","Right","Left"};
         positions = new String[] {BorderLayout.NORTH,BorderLayout.SOUTH,BorderLayout.EAST,BorderLayout.WEST};
-
+        reversedPositions = new String[] {BorderLayout.SOUTH, BorderLayout.NORTH,BorderLayout.WEST,BorderLayout.EAST};
         actions = new ActionListener[] {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -123,13 +125,16 @@ public class MazeGameGUI {
                     }
                 }
             };
-
-        for (int i = 0; i < buttons.length;i++){
-            buttons[i] = new JButton(buttonNames[i]);
-            buttons[i].setFocusable(false);
-            buttons[i].addActionListener(actions[i]);
-            bottomPanel.add(buttons[i],positions[i]);
-        }
+            for (int i = 0; i < buttons.length;i++){
+                buttons[i] = new JButton(buttonNames[i]);
+                buttons[i].setFocusable(false);
+                buttons[i].addActionListener(actions[i]);
+                bottomPanel.add(buttons[i],positions[i]);
+                
+            }
+           
+        
+        
         gameFrame.add(bottomPanel, BorderLayout.SOUTH);
     
         topPanel.setLayout(new FlowLayout());
@@ -141,5 +146,35 @@ public class MazeGameGUI {
       
     
 }
+    public JFrame getFrame() {
+        return gameFrame;
+    }
+    public JPanel getPanel(char panel) { 
+        if (panel == 'm') {
+            return mazePanel;
+
+            
+        } else if (panel == 't') {
+            return topPanel;
+            
+        } else {
+            return bottomPanel;
+        }
+    }
+    public JButton[] getButtons() {
+        return buttons;
+    }
+    public String[] getPositions(char x) {
+       if (x == 'o') {
+         return positions;
+       } else{
+           return reversedPositions;
+
+       }
+        }
+    public String[] getNames() {
+        return buttonNames;
+    }
+    
     }
 
