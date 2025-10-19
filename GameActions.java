@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import javax.swing.*;
+import javax.sound.sampled.*;
+import java.io.File;
 
 public class GameActions {
     private Board board;
@@ -64,6 +66,7 @@ public class GameActions {
     
      public void fruitAction() {
         score += 50;
+        playSound("fruit.wav");
      }
      public int score() {
         return score;
@@ -71,6 +74,7 @@ public class GameActions {
      public void fakeFruitAction() {
         if(controlsReversed) return;
         controlsReversed = true;
+        playSound("fakefruit.wav");
         int duration = 10000;
         Timer time = new Timer(duration, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -85,5 +89,16 @@ public class GameActions {
         return controlsReversed;
     }
 
-    
+    public void playSound(String soundFileName) {
+        try {
+            File soundFile = new File("sounds/" + soundFileName); 
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
