@@ -12,7 +12,11 @@ public class Board extends JPanel {
     private int size;
     private int unVisited;
     private int scale=1;
-    
+    private Image trapImage;
+    private Image playerImage;
+    private Image fruitImage;
+    private Image fakeFruitImage;
+    private Image exitImage;
 
     
     ArrayDeque<Position> positions = new ArrayDeque<>();
@@ -24,6 +28,11 @@ public class Board extends JPanel {
         addGameObject('!', fakeFruitC);
         addGameObject('@', trapC);
         
+        trapImage = new ImageIcon("images/trap.jpg").getImage();
+        playerImage = new ImageIcon("images/player.jpg").getImage();
+        fruitImage = new ImageIcon("images/fruit.jpg").getImage();
+        fakeFruitImage = new ImageIcon("images/fakeFruit.jpg").getImage();
+        exitImage = new ImageIcon("images/exit.jpg").getImage();
     }
     
     
@@ -93,22 +102,17 @@ public class Board extends JPanel {
                     g.fillRect(row*pixel, col*pixel, pixel, pixel);
                 } 
                 else if (entireBoard[row][col] == '8') {
-                    g.setColor(Color.RED);
-                    g.fillRect(row*pixel, col*pixel, pixel, pixel);
+                    g.drawImage(exitImage, row*pixel, col*pixel, pixel, pixel, this);
                 }
                 else if (entireBoard[row][col] == 'X') {
-                    g.setColor(Color.BLUE);
-                    g.fillRect(row*pixel, col*pixel, pixel, pixel);
+                    g.drawImage(playerImage, row*pixel, col*pixel, pixel, pixel, this);
                 } else if (entireBoard[row][col] =='+') {
-                    g.setColor(Color.YELLOW);
-                    g.fillOval(row*pixel, col*pixel, pixel, pixel);
+                    g.drawImage(fruitImage, row*pixel, col*pixel, pixel, pixel, this);
                 } else if (entireBoard[row][col] == '!') {
-                    g.setColor(Color.RED);
-                    g.fillOval(row*pixel, col*pixel, pixel, pixel);
+                    g.drawImage(fakeFruitImage, row*pixel, col*pixel, pixel, pixel, this);
                     
                 } else if (entireBoard[row][col] == '@') {
-                    g.setColor(Color.PINK);
-                    g.fillOval(row*pixel, col*pixel, pixel, pixel);
+                    g.drawImage(trapImage, row*pixel, col*pixel, pixel, pixel, this);
                 }
                 
                 

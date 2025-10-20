@@ -20,32 +20,6 @@ public class GameActions {
     private MazeGameGUI mainFrame;
     private Clip bgmClip;
 
-    public void playBGM(String bgmFile){
-        try{
-            File musicPath = new File("sounds/"+bgmFile);
-            if (musicPath.exists()){
-                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
-                bgmClip = AudioSystem.getClip();
-                bgmClip.open(audioInput);
-                bgmClip.loop(Clip.LOOP_CONTINUOUSLY);
-                bgmClip.start();
-            } else {
-                System.out.println("Can't find file");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    public void stopBGM() {
-        if (bgmClip != null) {
-            if (bgmClip.isRunning())
-            bgmClip.stop();
-        }
-            bgmClip.close();
-            bgmClip = null;
-    }
-
-
     public GameActions(MazeGameGUI gui, Board board,TimerAndScore scores) {
         
         mainFrame = gui;
@@ -59,14 +33,30 @@ public class GameActions {
         winLabel = new JLabel();
         failLabel = new JLabel();
         scoreLabel = new JLabel();
+
         playBGM("bgm.wav");
         
         
     }
+
+    public void playBGM(String bgmFile){
+        try{
+            File musicPath = new File("sounds/"+bgmFile);
+            if (musicPath.exists()){
+                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+                bgmClip = AudioSystem.getClip();
+                bgmClip.open(audioInput);
+                bgmClip.start();
+                bgmClip.loop(Clip.LOOP_CONTINUOUSLY);
+            } else {
+                System.out.println("Can't find file");
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public void Win() {
-
-            stopBGM();
-
             int finalScore = scores.finalScore();
             scores.timerStop();
             
@@ -92,8 +82,7 @@ public class GameActions {
 
     }
     public void GameOver() {
-        
-        stopBGM();
+
         
         mainFrame.getFrame().dispose();
         fail = new JFrame("Game Over");
