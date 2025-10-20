@@ -9,17 +9,17 @@ public class Player extends JPanel implements ActionListener {
     
     private final Board board;
     private Position chpos;
-    private int fruitsCollected;
-    private int fakeFruits;
+    private TimerAndScore scores;
     private MazeGameGUI gui;
-
-    
     private GameActions actions;
     
 
-    public Player(MazeGameGUI gui,Board board) {
+    
+
+    public Player(MazeGameGUI gui,Board board,TimerAndScore scores) {
         this.board = board;
-        actions = new GameActions(gui,board);
+        this.scores = scores;
+        actions = new GameActions(gui,board,scores);
         this.chpos = new Position(1,1);
         this.gui = gui;
       
@@ -75,17 +75,17 @@ public class Player extends JPanel implements ActionListener {
             chpos.setY(chpos.getY() + dy);
 
             if (board.getValue(chpos.getX(), chpos.getY()) == '8') {
-                actions.Win(fruitsCollected);
+                actions.Win();
                 
                 
             } else if (board.getValue(chpos.getX(), chpos.getY())  == '+') {
-                fruitsCollected++;
+                
                 actions.fruitAction();
                 board.setValueBox(chpos.getX(), chpos.getY(), 'X');
                 
             } else if (board.getValue(chpos.getX(), chpos.getY()) == '!') {
                 actions.fakeFruitAction();
-                fakeFruits++;
+                
                 board.setValueBox(chpos.getX(), chpos.getY(), 'X');
                 
             } else if (board.getValue(chpos.getX(), chpos.getY()) == '@') {

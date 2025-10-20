@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "StartGame",
+            "request": "launch",
+            "mainClass": "StartGame",
+            "projectName": "CBL-Maze-Game_c6898110"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

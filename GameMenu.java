@@ -21,7 +21,7 @@ public class GameMenu {
        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        mainFrame.setVisible(true);
 
-       buttonSize = new Dimension(250,50);
+       buttonSize = new Dimension(350,60);
 
        centraPanel = new JPanel();
        BoxLayout boxLayout = new BoxLayout(centraPanel, BoxLayout.Y_AXIS);
@@ -97,18 +97,19 @@ public class GameMenu {
     
     tutorialFrame = new JFrame("TUTORIAL");
     tutorialFrame.setLayout(new BorderLayout());
-    tutorialFrame.setSize(250,250);
+    tutorialFrame.setSize(600,500);
     tutorialFrame.setResizable(true);
     tutorialFrame.setLocationRelativeTo(null);
     tutorialFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     
     rulesText = new JTextArea();
-    Font highReadibility = new Font("Verdana", Font.PLAIN, 13);
+    Font highReadibility = new Font("Microsoft YaHei", Font.PLAIN, 16);
     rulesText.setFont(highReadibility);
     rulesText.setLineWrap(true );
     rulesText.setWrapStyleWord(true);
     rulesText.setEditable(false);
     rulesText.setBackground(Color.WHITE);
+    rulesText.setMargin(new Insets(20, 25, 20, 25));
     rulesText.setText(
     "Welcome to the Maze Java-based video game!\n" +
     "In these difficult ages of te prevalent obesity and unconcious eating disorders\n" +
