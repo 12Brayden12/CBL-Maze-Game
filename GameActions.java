@@ -63,7 +63,8 @@ public class GameActions {
             scoreLabel.setText("Your final score is: " + finalScore);
             win = new JFrame("Win!");
             mainFrame.getFrame().dispose();
-            winLabel.setText("Congratulations!!! You successfully reached the end of the game!!");
+            winLabel.setText("Congratulations!!!");
+            winLabel.setText(" You successfully reached the end of the game!!")
             winLabel.setFont(font);
             
             BoxLayout boxlayout = new BoxLayout(win.getContentPane(), BoxLayout.Y_AXIS);

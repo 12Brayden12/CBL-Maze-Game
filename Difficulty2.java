@@ -68,7 +68,7 @@ public class Difficulty2 {
                 int size = 10;
                 int easyFruit = 50;
                 int easyFakeFruit = 20;
-                int easyTraps = 0;
+                int easyTraps = 10;
                 new MazeGameGUI(size,easyFruit, easyFakeFruit, easyTraps);
             }
         });
