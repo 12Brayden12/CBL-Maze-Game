@@ -7,9 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.sound.sampled.*;
-import java.io.File;
 
 
 public class GameActions {
