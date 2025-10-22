@@ -65,9 +65,9 @@ public class Difficulty2 {
         easy.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                int size = 10;
-                int easyFruit = 50;
-                int easyFakeFruit = 20;
+                int size = 5;
+                int easyFruit = 5;
+                int easyFakeFruit = 2;
                 int easyTraps = 0;
                 new MazeGameGUI(size,easyFruit, easyFakeFruit, easyTraps);
             }
@@ -75,20 +75,20 @@ public class Difficulty2 {
         hard.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                int size = 20;
+                int size = 10;
                 int hardFruit = 10;
                 int hardFakeFruit = 7;
-                int hardTraps = 6;
+                int hardTraps = 5;
                 new MazeGameGUI(size,hardFruit, hardFakeFruit, hardTraps);
             }
         });
         medium.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                int size = 100;
+                int size = 20;
                 int mediumFruit = 7;
                 int mediumFakeFruit = 5;
-                int mediumTraps = 4;
+                int mediumTraps = 5;
                 new MazeGameGUI(size,mediumFruit, mediumFakeFruit, mediumTraps);
             }
             
