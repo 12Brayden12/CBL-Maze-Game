@@ -1,5 +1,5 @@
 import java.awt.*;
-import java .awt.event.ActionEvent;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -16,128 +16,206 @@ public class MazeGameGUI {
     private JPanel mazePanel;
     private JPanel topPanel;
     private JPanel bottomPanel;
+    private JPanel centralbuttons;
+    private JButton newGame;
+    private JButton menu;
     private JButton[] buttons;
+    private String[] buttonNames;
+    private String[] positions;
+    private String[] reversedPositions;
+    private ActionListener[] actions;
+    private GameActions gameactions;
+    private TimerAndScore scores;
     
 
-    public MazeGameGUI(int difficulty) {
+   
+    
 
-        tester = new Board(0, 0, difficulty, difficulty, difficulty);
-        testPlayer = new Player(tester);
+    public MazeGameGUI(int size,int difficulty, int difficulty1, int difficulty2) {
+        tester = new Board(size , size, difficulty, difficulty1, difficulty2);
+        scores = new TimerAndScore(tester,this);
+        scores.timerStart();
+
+        testPlayer = new Player(this,tester,scores);
+        
+        
+
 
         gameFrame = new JFrame();
         mazePanel = new JPanel();
         topPanel = new JPanel();
         bottomPanel = new JPanel();
+        gameactions = new GameActions(this, tester,scores);
+        centralbuttons = new JPanel();
+        newGame = new JButton();
+        menu = new JButton();
         
-        
-
-    }
-    public void MazeFrame() {
         gameFrame.setTitle("Maze Game");
         gameFrame.setLayout(new BorderLayout());
         gameFrame.setSize(500, 500);
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameFrame.setResizable(true);
         gameFrame.setLocationRelativeTo(null);
-        gameFrame.setVisible(true);
-}  
-public void mazePanel() {
+        
+ 
+
         mazePanel.setLayout(new BorderLayout());
         mazePanel.add(tester, BorderLayout.CENTER);
         mazePanel.setFocusable(true);
+       
 
         mazePanel.addKeyListener(new KeyAdapter() {
+            
             public void keyPressed(KeyEvent e ) {
                 int keyCode = e.getKeyCode();
-                if (e.getKeyChar() == 'w' || keyCode == KeyEvent.VK_UP) {
-                    testPlayer.uDir.moveDirection(tester);
+                if (gameactions.reversed()) {
+                    if (e.getKeyChar() == 'w' || keyCode == KeyEvent.VK_UP) {
+                    testPlayer.Move(tester, 0, +1);
                     
                 } else if (e.getKeyChar() == 's' || keyCode == KeyEvent.VK_DOWN) {
-                    testPlayer.dDir.moveDirection(tester);
+                    testPlayer.Move(tester, 0, -1);
                     
                 } else if (e.getKeyChar() == 'd' || keyCode == KeyEvent.VK_RIGHT) {
-                    testPlayer.rDir.moveDirection(tester);
+                    
+                    testPlayer.Move(tester, -1, 0);
                 } else if (e.getKeyChar() == 'a' || keyCode == KeyEvent.VK_LEFT) {
-                    testPlayer.lDir.moveDirection(tester);
+                    testPlayer.Move(tester, +1, 0);
                 }
-            }            
+                    
+                } else {
+                if (e.getKeyChar() == 'w' || keyCode == KeyEvent.VK_UP) {
+                    System.out.println("w");
+                    testPlayer.Move(tester, 0, -1);
+                    
+                } else if (e.getKeyChar() == 's' || keyCode == KeyEvent.VK_DOWN) {
+                    System.out.println("s");
+                    testPlayer.Move(tester, 0, +1);
+                    
+                } else if (e.getKeyChar() == 'd' || keyCode == KeyEvent.VK_RIGHT) {
+                    System.out.println("d");
+                    testPlayer.Move(tester, +1, 0);
+                } else if (e.getKeyChar() == 'a' || keyCode == KeyEvent.VK_LEFT) {
+                    System.out.println("a");
+                    testPlayer.Move(tester, -1, 0);
+                }
+            }   
+        }         
         });
-        /*
-        mazePanel.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                char[] chars = {'w','s','a','d'};
-                int[] keycodes = {KeyEvent.VK_UP,KeyEvent.VK_DOWN,KeyEvent.VK_LEFT,KeyEvent.VK_RIGHT};
-                Move[] directions = {testPlayer.uDir,testPlayer.dDir,testPlayer.lDir,testPlayer.rDir};
-                for (int i=0; i < directions.length; i++) {
-                    if (e.getKeyChar() == chars[i] || e.getKeyCode() == keycodes[i] ) {
-                        directions[i].moveDirection(tester);
-                    }
-
-            }
-                
-            }
-            
-        });
-         * 
-         */
+    
         gameFrame.add(mazePanel,BorderLayout.CENTER);
 
-    }
-    public void bottomPanel() {
         bottomPanel.setLayout(new BorderLayout());
         bottomPanel.setBackground(Color.WHITE);
-        
-    }
-    public void buttonsAction() {
+
         buttons = new JButton[4];
-        String[] buttonNames = {"Up","Down","Right","Left"};
-        String[] positions = {BorderLayout.NORTH,BorderLayout.SOUTH,BorderLayout.EAST,BorderLayout.WEST};
-
-        final MoveLeft lDir = new MoveLeft();
-        final MoveRight rDir = new MoveRight();
-        final MoveDown dDir = new MoveDown();
-        final MoveUp uDir = new MoveUp();
-
-            ActionListener[] actions = {
+        buttonNames = new String[] {"Up","Down","Right","Left"};
+        positions = new String[] {BorderLayout.NORTH,BorderLayout.SOUTH,BorderLayout.EAST,BorderLayout.WEST};
+        reversedPositions = new String[] {BorderLayout.SOUTH, BorderLayout.NORTH,BorderLayout.WEST,BorderLayout.EAST};
+        actions = new ActionListener[] {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        testPlayer.lDir.moveDirection(tester);
+                        System.out.println("up");
+                        testPlayer.Move(tester, 0, -1);
                     }
                 },
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        testPlayer.dDir.moveDirection(tester);
+                        System.out.println("down");
+                        testPlayer.Move(tester, 0, +1);
                     }
                 },
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        testPlayer.rDir.moveDirection(tester);
+                        System.out.println("right");
+                        testPlayer.Move(tester, +1, 0);
                     }
                 },
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        testPlayer.lDir.moveDirection(tester);
+                        System.out.println("left");
+                        testPlayer.Move(tester,-1,0);
                     }
                 }
             };
+            for (int i = 0; i < buttons.length;i++){
+                buttons[i] = new JButton(buttonNames[i]);
+                buttons[i].setFocusable(false);
+                buttons[i].addActionListener(actions[i]);
+                bottomPanel.add(buttons[i],positions[i]);
+                
+            }
+        centralbuttons.setLayout(new FlowLayout());
+        centralbuttons.setBackground(Color.WHITE);
+        
+        newGame.setText("New Game");
+        menu.setText("Menu");
+        newGame.setAlignmentX(Component.CENTER_ALIGNMENT);
+        menu.setAlignmentX(Component.CENTER_ALIGNMENT);
+        newGame.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                gameFrame.dispose();
+                new MazeGameGUI(size, difficulty, difficulty1, difficulty2);
+            }
+        });
+        menu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                gameFrame.dispose();
+                new GameMenu();
+            }
+        });
+        centralbuttons.add(newGame);
+        centralbuttons.add(menu);
 
-    }
-    public void addButtons(String[] buttonNames, String[] positions, ActionListener[] actions) {
-        for (int i = 0; i < buttons.length;i++){
-            buttons[i] = new JButton(buttonNames[i]);
-            buttons[i].setFocusable(true);
-            buttons[i].addActionListener(actions[i]);
-            bottomPanel.add(buttons[i],positions[i]);
-        }
-        gameFrame.add(bottomPanel,BorderLayout.SOUTH);
-    }
-    public void topPanel() {
+        bottomPanel.add(centralbuttons,BorderLayout.CENTER);
+        
+        
+        gameFrame.add(bottomPanel, BorderLayout.SOUTH);
+    
         topPanel.setLayout(new FlowLayout());
-        topPanel.setBackground(Color.BLACK);
+        topPanel.setBackground(Color.WHITE);
+        topPanel.add(scores.getFakeFruits());
+        topPanel.add(scores.getScoreLabel());
+        topPanel.add(scores.getTimeLabel());
+
         gameFrame.add(topPanel,BorderLayout.NORTH);
-    }
-    
-    
-    
+        scores.timerStart();
+   
+        gameFrame.setVisible(true);
+        mazePanel.requestFocusInWindow();
+      
     
 }
+    public JFrame getFrame() {
+        return gameFrame;
+    }
+    public JPanel getPanel(char panel) { 
+        if (panel == 'm') {
+            return mazePanel;
+
+            
+        } else if (panel == 't') {
+            return topPanel;
+            
+        } else if (panel == 'c') {
+            return centralbuttons;
+        } else {
+            return bottomPanel;
+        }
+    }
+    public JButton[] getButtons() {
+        return buttons;
+    }
+    public String[] getPositions(char x) {
+       if (x == 'o') {
+         return positions;
+       } else{
+           return reversedPositions;
+
+       }
+        }
+    public String[] getNames() {
+        return buttonNames;
+    }
+    
+    }
+

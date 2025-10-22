@@ -21,7 +21,7 @@ public class GameMenu {
        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        mainFrame.setVisible(true);
 
-       buttonSize = new Dimension(250,50);
+       buttonSize = new Dimension(350,60);
 
        centraPanel = new JPanel();
        BoxLayout boxLayout = new BoxLayout(centraPanel, BoxLayout.Y_AXIS);
@@ -47,6 +47,7 @@ public class GameMenu {
        play.setMaximumSize(buttonSize);
        play.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent ae) {
+                /*
                 Difficulty.GameSettings settings = Difficulty.chooseDifficulty();
                 if (settings == null) return; 
                 System.out.println("Fake Fruits: " + settings.fakeFruitCount);
@@ -61,6 +62,25 @@ public class GameMenu {
                 gameFrame.add(gameBoard);
 
                 gameFrame.setVisible(true);
+                Difficulty.GameSettings settings = Difficulty.chooseDifficulty();
+                if (settings == null) return; 
+                System.out.println("Fake Fruits: " + settings.fakeFruitCount);
+                System.out.println("Traps: " + settings.trapCount);
+                System.out.println("Time Limit: " + settings.timeLimit);
+
+                JFrame gameFrame = new JFrame("Maze Game");
+                gameFrame.setSize(500, 500);
+                gameFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+                Board gameBoard = new Board(10, 10, 10, settings.fakeFruitCount, settings.trapCount);
+                gameFrame.add(gameBoard);
+
+                gameFrame.setVisible(true);
+                 * 
+                 */
+                mainFrame.dispose();
+                System.out.println('1');
+                new Difficulty2();
 
         }
        });
@@ -77,18 +97,19 @@ public class GameMenu {
     
     tutorialFrame = new JFrame("TUTORIAL");
     tutorialFrame.setLayout(new BorderLayout());
-    tutorialFrame.setSize(250,250);
+    tutorialFrame.setSize(600,500);
     tutorialFrame.setResizable(true);
     tutorialFrame.setLocationRelativeTo(null);
     tutorialFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     
     rulesText = new JTextArea();
-    Font highReadibility = new Font("Verdana", Font.PLAIN, 13);
+    Font highReadibility = new Font("Microsoft YaHei", Font.PLAIN, 16);
     rulesText.setFont(highReadibility);
     rulesText.setLineWrap(true );
     rulesText.setWrapStyleWord(true);
     rulesText.setEditable(false);
     rulesText.setBackground(Color.WHITE);
+    rulesText.setMargin(new Insets(20, 25, 20, 25));
     rulesText.setText(
     "Welcome to the Maze Java-based video game!\n" +
     "In these difficult ages of te prevalent obesity and unconcious eating disorders\n" +
@@ -114,10 +135,8 @@ public class GameMenu {
            tutorialFrame.add(scrollPane, BorderLayout.CENTER);
            tutorialFrame.setVisible(true);
     }
-    public static void main(String[] args) {
-        new GameMenu();
-    }
-      
+    
+ 
     
 
 

@@ -9,15 +9,17 @@ public class GameObject {
     public GameObject(char symbol) {
         this.symbol = symbol; 
         location = new Random();
-        pos = new Position();
+        pos = new Position(0,0);
+        
     }
 
-    public Position availablePosition(Board board) {
+    public void add(Board board, int amount) {
         int randX; 
         int randY;
-        while (pos.getX() == 0 || pos.getY() == 0) {
+        for (int i =0; i < amount; i++) {
+            while (pos.getX() == 0 || pos.getY() == 0) {
             randX = location.nextInt(board.boardSize());
-            randY = location.nextInt(board.boardScale());
+            randY = location.nextInt(board.boardSize());
             if (randX%2 != 0 && (randX != 0 || randX != board.boardSize())) {
                 pos.setX(randX);
             }
@@ -29,13 +31,9 @@ public class GameObject {
                 pos.setY(0);
             }
         }
-        return pos;
-
-    }
-    public void add(Board board, int amount) {
-        for (int i =0; i < amount; i++) {
-            Position pos = availablePosition(board);
+            
             board.setValueBox(pos.getX(), pos.getY(),symbol);
         }
     }
+    
 }
