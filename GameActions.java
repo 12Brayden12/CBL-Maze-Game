@@ -1,24 +1,32 @@
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import javax.swing.*;
-import javax.sound.sampled.*;
-import java.io.File;
+
 
 public class GameActions {
     private Timer timeReversed;
     private JFrame win;
     private JFrame fail;
+    private JPanel winPanel;
+    private JPanel failPanel;
     private JLabel winLabel;
+    private JLabel information;
+    private JLabel information2;
     private JLabel failLabel;
     private JLabel scoreLabel;
+
     private TimerAndScore scores;
     private static boolean controlsReversed;
+    private SoundManager soundManager;
     Font font;
     private MazeGameGUI mainFrame;
-    private Clip bgmClip;
+    
 
     public GameActions(MazeGameGUI gui, Board board,TimerAndScore scores) {
         
@@ -28,99 +36,111 @@ public class GameActions {
 
         
        
-
+        win = new JFrame("You won!!!");
+        fail = new JFrame("Game Over");
         font = new Font("Verdana", Font.BOLD, 40);
         winLabel = new JLabel();
+        information = new JLabel();
+        information2 = new JLabel();
         failLabel = new JLabel();
         scoreLabel = new JLabel();
-
-        playBGM("bgm.wav");
+        soundManager = new SoundManager();
+        winPanel = new JPanel();
+        failPanel = new JPanel();
+        soundManager.playBGM("bgm.wav");
         
         
     }
-
-    public void playBGM(String bgmFile){
-        try{
-            File musicPath = new File("sounds/"+bgmFile);
-            if (musicPath.exists()){
-                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
-                bgmClip = AudioSystem.getClip();
-                bgmClip.open(audioInput);
-                bgmClip.start();
-                bgmClip.loop(Clip.LOOP_CONTINUOUSLY);
-            } else {
-                System.out.println("Can't find file");
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
+ 
     public void Win() {
-            int finalScore = scores.finalScore();
-            scores.timerStop();
+        mainFrame.getFrame().dispose();
+
+        winLabel.setText("Congratulations!!!");
+        winLabel.setFont(font);
+        winLabel.setPreferredSize(new Dimension(400, 80));
+        winLabel.setForeground(Color.BLACK);
+        winLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        information.setText("<html><center>You successfully reached<br>the end of the game!</center></html>");
+        information.setFont(font);
+        information.setMaximumSize(new Dimension(400,50));
+        information.setForeground(Color.BLACK);
+        information.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        int finalScore = scores.finalScore();
+        scores.timerStop();
+        scoreLabel.setText("Your final score is: " + finalScore);
+        scoreLabel.setFont(new Font("Verdana",Font.BOLD,25));
+        scoreLabel.setForeground(Color.RED);
+        scoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        BoxLayout boxlayout = new BoxLayout(winPanel, BoxLayout.Y_AXIS);
+
+        winPanel.setLayout(boxlayout);
+        winPanel.setBackground(Color.WHITE);
+
+        winPanel.add(Box.createVerticalGlue());
+        winPanel.add(winLabel);
+        winPanel.add(Box.createVerticalStrut(10));
+        winPanel.add(information);
+        winPanel.add(Box.createVerticalStrut(20));
+        winPanel.add(scoreLabel);
+        winPanel.add(Box.createVerticalGlue());
             
-            scoreLabel.setText("Your final score is: " + finalScore);
-            win = new JFrame("Win!");
-            mainFrame.getFrame().dispose();
-            winLabel.setText("Congratulations!!!");
-            winLabel.setText(" You successfully reached the end of the game!!")
-            winLabel.setFont(font);
-            
-            BoxLayout boxlayout = new BoxLayout(win.getContentPane(), BoxLayout.Y_AXIS);
-            win.setLayout(boxlayout);
-            win.setBackground(Color.WHITE);
-            win.add(Box.createVerticalGlue());
-            win.add(winLabel);
-            win.add(Box.createVerticalGlue());
-            win.add(scoreLabel);
-            win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            win.setSize(500,500);
-            win.setResizable(true);
-            win.setLocationRelativeTo(null);
-            win.setVisible(true);
+        win.setLayout(new BorderLayout());
+        win.setBackground(Color.WHITE);
+        win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        win.setSize(500,500);
+        win.setResizable(true);
+        win.setLocationRelativeTo(null);
+        win.add(winPanel, BorderLayout.CENTER);
+        win.setVisible(true);
             
 
     }
     public void GameOver() {
-
-        
         mainFrame.getFrame().dispose();
-        fail = new JFrame("Game Over");
+        
+        failLabel.setText("Game Over!!!");
+        failLabel.setFont(new Font("Verdana",font.BOLD,40));
+        
+        failLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        failLabel.setForeground(Color.RED);
+
+        information2.setText("Try again!");
+        information2.setFont(new Font("Verdana", font.BOLD,25));
+        
+        information2.setAlignmentX(Component.CENTER_ALIGNMENT);
+        information2.setForeground(Color.BLACK);
+
+        failPanel.setLayout(new BoxLayout(failPanel, BoxLayout.Y_AXIS));
+        failPanel.setBackground(Color.WHITE);
+
+        failPanel.add(Box.createVerticalGlue());
+        failPanel.add(failLabel);
+        failPanel.add(Box.createVerticalStrut(20));
+        failPanel.add(information2);
+        failPanel.add(Box.createVerticalGlue());
+       
+        fail.setLayout(new BorderLayout());
         fail.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fail.setSize(500,500);
         fail.setResizable(true);
-
-        JLabel label = new JLabel("GAME OVER", SwingConstants.CENTER);
-        label.setFont(new Font("Verdana", Font.BOLD, 50));
-        label.setForeground(Color.RED);
         fail.setVisible(true);
+        fail.add(failPanel, BorderLayout.CENTER);
         fail.setLocationRelativeTo(null);
-      
-
-
-        
-        failLabel.setText("Game Over!!!");
-        failLabel.setFont(font);
-        failLabel.setBackground(Color.BLACK);
-        JPanel panel = new JPanel();
-        panel.setBackground(Color.WHITE);
-        panel.setLayout(new BorderLayout());
-        panel.add(failLabel,BorderLayout.CENTER);
-        fail.add(panel);
-        fail.setVisible(true);
 
     }
 
      public void fruitAction() {
         scores.fruits();
-        playSound("fruit.wav");
+        soundManager.playSound("fruit.wav");
      }
      
      public void fakeFruitAction() {
         
         scores.fakeFruit();
-        playSound("fakefruit.wav");
+        soundManager.playSound("fakefruit.wav");
         
         mainFrame.getPanel('b').removeAll();
         mainFrame.getFrame().repaint();
@@ -140,8 +160,6 @@ public class GameActions {
         mainFrame.getPanel('b').repaint();
         mainFrame.getFrame().repaint();
 
-
-        
         controlsReversed = true;
         
         int duration = 10000;
@@ -151,20 +169,17 @@ public class GameActions {
         timeReversed = new Timer(duration, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 controlsReversed = false;
-                for ( int i = 0; i < buttonNames.length; i++) {
+                for (int i = 0; i < buttonNames.length; i++) {
                     reversedbButtons[i].setFocusable(false);
-                    mainFrame.getPanel('b').add(reversedbButtons[i],original[i]);
+                    mainFrame.getPanel('b').add(reversedbButtons[i], original[i]);
 
                 }
-                mainFrame.getFrame().add(mainFrame.getPanel('b'),BorderLayout.SOUTH);
-                mainFrame.getPanel('b').add(mainFrame.getPanel('c'),BorderLayout.CENTER);
+                mainFrame.getFrame().add(mainFrame.getPanel('b'), BorderLayout.SOUTH);
+                mainFrame.getPanel('b').add(mainFrame.getPanel('c'), BorderLayout.CENTER);
                 mainFrame.getFrame().revalidate();
                 mainFrame.getPanel('b').repaint();
                 mainFrame.getFrame().repaint();
-
-            }
-            
-            
+            } 
         });
         timeReversed.setRepeats(false);
         timeReversed.start();
@@ -172,17 +187,6 @@ public class GameActions {
     public boolean reversed() {
         return controlsReversed;
     }
-
-    public void playSound(String soundFileName) {
-        try {
-            File soundFile = new File("sounds/" + soundFileName); 
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioStream);
-            clip.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    
 
 }
