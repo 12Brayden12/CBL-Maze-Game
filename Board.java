@@ -38,7 +38,7 @@ public class Board extends JPanel {
     
 
     public void initializeBoard(int width, int length) {
-        unVisited = (width*width);
+        unVisited = (width * width);
         width *= 2;
         width++;
         length *= 2;
@@ -51,8 +51,8 @@ public class Board extends JPanel {
 
     }
     public void codeMaze() {
-        for ( int row = 0; row < size; row++) {
-            for(int col = 0; col < size; col++) {
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
                 entireBoard[row][col] = 'u';
             }
         }
@@ -71,16 +71,20 @@ public class Board extends JPanel {
         }
         generate(1, 1);
     }
+
     public int boardSize() {
         return size;
     }
+
     public int boardScale() {
         return scale;
     }
+
     public void setValueBox(int x, int y, char value){
         entireBoard[x][y] = value;
         repaint();
     }
+
     public char getValue(int x, int y) {
         return entireBoard[x][y];
     }
@@ -95,24 +99,24 @@ public class Board extends JPanel {
             for (int col = 0; col < size; col++) {
                 if (entireBoard[row][col] == '=') {
                     g.setColor(Color.black);
-                    g.fillRect(row*pixel, col*pixel, pixel, pixel);
+                    g.fillRect(row * pixel, col * pixel, pixel, pixel);
                 }
                 else if (entireBoard[row][col] == '#') {
                     g.setColor(Color.black);
-                    g.fillRect(row*pixel, col*pixel, pixel, pixel);
+                    g.fillRect(row * pixel, col * pixel, pixel, pixel);
                 } 
                 else if (entireBoard[row][col] == '8') {
-                    g.drawImage(exitImage, row*pixel, col*pixel, pixel, pixel, this);
+                    g.drawImage(exitImage, row * pixel, col * pixel, pixel, pixel, this);
                 }
                 else if (entireBoard[row][col] == 'X') {
-                    g.drawImage(playerImage, row*pixel, col*pixel, pixel, pixel, this);
-                } else if (entireBoard[row][col] =='+') {
-                    g.drawImage(fruitImage, row*pixel, col*pixel, pixel, pixel, this);
+                    g.drawImage(playerImage, row * pixel, col * pixel, pixel, pixel, this);
+                } else if (entireBoard[row][col] == '+') {
+                    g.drawImage(fruitImage, row * pixel, col * pixel, pixel, pixel, this);
                 } else if (entireBoard[row][col] == '!') {
-                    g.drawImage(fakeFruitImage, row*pixel, col*pixel, pixel, pixel, this);
+                    g.drawImage(fakeFruitImage, row * pixel, col * pixel, pixel, pixel, this);
                     
                 } else if (entireBoard[row][col] == '@') {
-                    g.drawImage(trapImage, row*pixel, col*pixel, pixel, pixel, this);
+                    g.drawImage(trapImage, row * pixel, col * pixel, pixel, pixel, this);
                 }
                 
                 
@@ -137,8 +141,8 @@ public class Board extends JPanel {
         Random location = new Random();
         int randX; 
         int randY;
-        for (int i =0; i < amount; i++) {
-            Position pos = new Position(0,0);
+        for (int i = 0; i < amount; i++) {
+            Position pos = new Position(0, 0);
 
             while (pos.getX() == 0 || pos.getY() == 0) {
             randX = location.nextInt(size);
