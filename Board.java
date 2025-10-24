@@ -33,12 +33,6 @@ public class Board extends JPanel {
 		exitImage = new ImageIcon("images/exit.jpg").getImage();
 	}
 	
-	
-	/**
-	 * 
-	 * @param width
-	 * @param length
-	 */
 	public void initializeBoard(int width, int length) {	
 		unVisited = (width * width);
 		width *= 2;

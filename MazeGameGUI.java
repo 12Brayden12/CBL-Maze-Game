@@ -67,34 +67,34 @@ public class MazeGameGUI {
                 int keyCode = e.getKeyCode();
             if (gameactions.reversed()) {
                 if (e.getKeyChar() == 'w' || keyCode == KeyEvent.VK_UP) {
-                    testPlayer.Move(tester, 0,  +1);
+                    testPlayer.move(tester, 0,  +1);
                     
                     } else if (e.getKeyChar() == 's' || keyCode == KeyEvent.VK_DOWN) {
-                        testPlayer.Move(tester, 0, -1);
+                        testPlayer.move(tester, 0, -1);
                     
                     } else if (e.getKeyChar() == 'd' || keyCode == KeyEvent.VK_RIGHT) {
                     
-                        testPlayer.Move(tester, -1, 0);
+                        testPlayer.move(tester, -1, 0);
                     } else if (e.getKeyChar() == 'a' || keyCode == KeyEvent.VK_LEFT) {
-                        testPlayer.Move(tester, +1, 0);
+                        testPlayer.move(tester, +1, 0);
                     }
                     
                 } else {
                     if (e.getKeyChar() == 'w' || keyCode == KeyEvent.VK_UP) {
                         System.out.println("w");
-                        testPlayer.Move(tester, 0, -1);
+                        testPlayer.move(tester, 0, -1);
                     
                     } else if (e.getKeyChar() == 's' || keyCode == KeyEvent.VK_DOWN) {
                         System.out.println("s");
-                        testPlayer.Move(tester, 0, +1);
+                        testPlayer.move(tester, 0, +1);
                     
                     } else if (e.getKeyChar() == 'd' || keyCode == KeyEvent.VK_RIGHT) {
                         System.out.println("d");
-                        testPlayer.Move(tester, +1, 0);
+                        testPlayer.move(tester, +1, 0);
 
                     } else if (e.getKeyChar() == 'a' || keyCode == KeyEvent.VK_LEFT) {
                     System.out.println("a");
-                    testPlayer.Move(tester, -1, 0);
+                    testPlayer.move(tester, -1, 0);
                 }
                 }   
     }         
@@ -113,25 +113,25 @@ public class MazeGameGUI {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("up");
-                        testPlayer.Move(tester, 0, -1);
+                        testPlayer.move(tester, 0, -1);
                     }
                 },
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("down");
-                        testPlayer.Move(tester, 0, +1);
+                        testPlayer.move(tester, 0, +1);
                     }
                 },
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("right");
-                        testPlayer.Move(tester, +1, 0);
+                        testPlayer.move(tester, +1, 0);
                     }
                 },
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("left");
-                        testPlayer.Move(tester,-1,0);
+                        testPlayer.move(tester,-1,0);
                     }
                 }
             };
@@ -164,7 +164,7 @@ public class MazeGameGUI {
         centralbuttons.add(newGame);
         centralbuttons.add(menu);
 
-        bottomPanel.add(centralbuttons,BorderLayout.CENTER);
+        bottomPanel.add(centralbuttons, BorderLayout.CENTER);
         
         
         gameFrame.add(bottomPanel, BorderLayout.SOUTH);
@@ -175,7 +175,7 @@ public class MazeGameGUI {
         topPanel.add(scores.getScoreLabel());
         topPanel.add(scores.getTimeLabel());
 
-        gameFrame.add(topPanel,BorderLayout.NORTH);
+        gameFrame.add(topPanel, BorderLayout.NORTH);
         scores.timerStart();
    
         gameFrame.setVisible(true);
@@ -183,9 +183,11 @@ public class MazeGameGUI {
       
     
 }
+
     public JFrame getFrame() {
         return gameFrame;
     }
+
     public JPanel getPanel(char panel) { 
         if (panel == 'm') {
             return mazePanel;
