@@ -1,12 +1,12 @@
 import java.awt.*;
+import java.math.*;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.text.html.parser.Entity;
 
-import java.math.*;
-
-
-import java.util.*;
-
+/**
+ * Board panel that generates and renders a maze for the game.
+ */
 public class Board extends JPanel {
     private char[][] entireBoard;
     private boolean[][] accessible;
@@ -22,7 +22,16 @@ public class Board extends JPanel {
     ArrayList<Position> validPositions = new ArrayList<>();
     ArrayDeque<Position> positions = new ArrayDeque<>();
 
-    public Board(int x, int y, int fruitC,int fakeFruitC, int trapC) {
+    /**
+     * Constructs a Board with the given dimensions and numbers of objects.
+     *
+     * @param x width in cells
+     * @param y height in cells
+     * @param fruitC number of real fruits to place
+     * @param fakeFruitC number of fake fruits to place
+     * @param trapC number of traps to place
+     */
+    public Board(int x, int y, int fruitC, int fakeFruitC, int trapC) {
         initializeBoard(x, y);
         codeMaze();
         addGameObject('+', fruitC);
@@ -38,6 +47,12 @@ public class Board extends JPanel {
     
     
 
+    /**
+     * Initializes the game board with the specified dimensions.
+     * 
+     * @param width the width of the board
+     * @param length the length of the board
+     */
     public void initializeBoard(int width, int length) {
         unVisited = (width * width);
         width *= 2;
@@ -47,25 +62,27 @@ public class Board extends JPanel {
         scale = length;
         entireBoard = new char[width][length];
         size = width;
-        
-        
-
     }
+
+    /**
+     * Creates the initial maze structure by setting up walls and boundaries.
+     * This method initializes the maze grid and calls the maze generation algorithm.
+     */
     public void codeMaze() {
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
                 entireBoard[row][col] = 'u';
             }
         }
-        for ( int row = 0; row < size; row += 2) {
-            for(int col = 0; col < size; col++) {
+        for (int row = 0; row < size; row += 2) {
+            for (int col = 0; col < size; col++) {
                 entireBoard[row][col] = '=';
                 entireBoard[col][row] = '=';
             }
         }
         for (int row = 0; row < size; row++) {
             entireBoard[row][0] = '#';
-            entireBoard[row][size -1] = '#';
+            entireBoard[row][size - 1] = '#';
             entireBoard[0][row] = '#';
             entireBoard[size - 1][row] = '#';
             

@@ -1,12 +1,15 @@
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import java.awt.Component;
-import java.awt.Dimension;
 
+/**
+ * Class that handles the difficulty selection screen for the maze game.
+ */
 public class Difficulty2 {
     
     private JFrame frame;
@@ -16,11 +19,14 @@ public class Difficulty2 {
     private JButton hard;
     private BoxLayout boxLayout;
 
+    /**
+     * Constructs the difficulty selection window and initializes UI components.
+     */
     public Difficulty2() {
         frame = new JFrame("Difficulty");
         boxLayout = new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS);
         Font font = new Font("Verdana", Font.BOLD, 40);
-        Dimension buttonSize = new Dimension(300,60);
+        Dimension buttonSize = new Dimension(300, 60);
         easy = new JButton();
         easy.setText("Easy");
         easy.setFont(font);
@@ -69,7 +75,7 @@ public class Difficulty2 {
                 int easyFruit = 5;
                 int easyFakeFruit = 2;
                 int easyTraps = 0;
-                new MazeGameGUI(size,easyFruit, easyFakeFruit, easyTraps);
+                new MazeGameGUI(size, easyFruit, easyFakeFruit, easyTraps);
             }
         });
         hard.addActionListener(new ActionListener() {
@@ -79,7 +85,7 @@ public class Difficulty2 {
                 int hardFruit = 10;
                 int hardFakeFruit = 7;
                 int hardTraps = 5;
-                new MazeGameGUI(size,hardFruit, hardFakeFruit, hardTraps);
+                new MazeGameGUI(size, hardFruit, hardFakeFruit, hardTraps);
             }
         });
         medium.addActionListener(new ActionListener() {
@@ -89,7 +95,7 @@ public class Difficulty2 {
                 int mediumFruit = 7;
                 int mediumFakeFruit = 5;
                 int mediumTraps = 5;
-                new MazeGameGUI(size,mediumFruit, mediumFakeFruit, mediumTraps);
+                new MazeGameGUI(size, mediumFruit, mediumFakeFruit, mediumTraps);
             }
             
         });
