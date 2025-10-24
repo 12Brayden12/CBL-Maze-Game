@@ -1,11 +1,10 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.BorderLayout;
 import javax.swing.*;
 
 
@@ -61,16 +60,17 @@ public class GameActions {
         winLabel.setForeground(Color.BLACK);
         winLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        information.setText("<html><center>You successfully reached<br>the end of the game!</center></html>");
+        information.setText("<html><center>You successfully reached<br>the" 
+            + "end of the game!</center></html>");
         information.setFont(font);
-        information.setMaximumSize(new Dimension(400,50));
+        information.setMaximumSize(new Dimension(400, 50));
         information.setForeground(Color.BLACK);
         information.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         int finalScore = scores.finalScore();
         scores.timerStop();
         scoreLabel.setText("Your final score is: " + finalScore);
-        scoreLabel.setFont(new Font("Verdana",Font.BOLD,25));
+        scoreLabel.setFont(new Font("Verdana", Font.BOLD, 25));
         scoreLabel.setForeground(Color.RED);
         scoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -90,7 +90,7 @@ public class GameActions {
         win.setLayout(new BorderLayout());
         win.setBackground(Color.WHITE);
         win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        win.setSize(500,500);
+        win.setSize(500, 500);
         win.setResizable(true);
         win.setLocationRelativeTo(null);
         win.add(winPanel, BorderLayout.CENTER);
@@ -102,13 +102,13 @@ public class GameActions {
         mainFrame.getFrame().dispose();
         
         failLabel.setText("Game Over!!!");
-        failLabel.setFont(new Font("Verdana",font.BOLD,40));
+        failLabel.setFont(new Font("Verdana", font.BOLD, 40));
         
         failLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         failLabel.setForeground(Color.RED);
 
         information2.setText("Try again!");
-        information2.setFont(new Font("Verdana", font.BOLD,25));
+        information2.setFont(new Font("Verdana", font.BOLD, 25));
         
         information2.setAlignmentX(Component.CENTER_ALIGNMENT);
         information2.setForeground(Color.BLACK);
@@ -132,12 +132,12 @@ public class GameActions {
 
     }
 
-     public void fruitAction() {
+    public void fruitAction() {
         scores.fruits();
         soundManager.playSound("fruit.wav");
      }
      
-     public void fakeFruitAction() {
+    public void fakeFruitAction() {
         
         scores.fakeFruit();
         soundManager.playSound("fakefruit.wav");
@@ -149,14 +149,14 @@ public class GameActions {
         String[] positions2 = mainFrame.getPositions('r');
         String[] buttonNames = mainFrame.getNames();
         
-        for ( int i = 0; i < buttonNames.length; i++) {
+        for (int i = 0; i < buttonNames.length; i++) {
 
             reversedbButtons[i].setFocusable(false);
-            mainFrame.getPanel('b').add(reversedbButtons[i],positions2[i]);
+            mainFrame.getPanel('b').add(reversedbButtons[i], positions2[i]);
         }
-        mainFrame.getFrame().add(mainFrame.getPanel('b'),BorderLayout.SOUTH);
-        mainFrame.getPanel('b').add(mainFrame.getPanel('c'),BorderLayout.CENTER);
-        mainFrame.getFrame().revalidate();
+        mainFrame.getFrame().add(mainFrame.getPanel('b'), BorderLayout.SOUTH);
+        mainFrame.getPanel('b').add(mainFrame.getPanel('c'), BorderLayout.CENTER);
+        mainFrame.getFrame().revalidate(); 
         mainFrame.getPanel('b').repaint();
         mainFrame.getFrame().repaint();
 
@@ -184,6 +184,7 @@ public class GameActions {
         timeReversed.setRepeats(false);
         timeReversed.start();
     }
+
     public boolean reversed() {
         return controlsReversed;
     }

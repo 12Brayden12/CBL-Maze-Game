@@ -1,4 +1,4 @@
-import java.awt.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -19,8 +19,8 @@ public class Player extends JPanel implements ActionListener {
     public Player(MazeGameGUI gui,Board board,TimerAndScore scores) {
         this.board = board;
         this.scores = scores;
-        actions = new GameActions(gui,board,scores);
-        this.chpos = new Position(1,1);
+        actions = new GameActions(gui, board, scores);
+        this.chpos = new Position(1, 1);
         this.gui = gui;
       
     }
@@ -33,32 +33,32 @@ public class Player extends JPanel implements ActionListener {
         public void keyPressed(KeyEvent e) {
             if (actions.reversed()) {
                 if (e.getKeyChar() == 'w') {
-                    Move(board, 0, -1);
+                    move(board, 0, -1);
                 } else if (e.getKeyChar() == 's') {
-                    Move(board, 0, +1);
+                    move(board, 0, +1);
                 } else if (e.getKeyChar() == 'a') {
-                    Move(board, +1, 0);
+                    move(board, +1, 0);
                     
                 } else  if (e.getKeyChar() == 'd') {
-                    Move(board, -1, 0);
+                    move(board, -1, 0);
                     
                 }
                 
             } else {
                 if (e.getKeyChar() == 'w') {
                     System.out.println("left");
-                    Move(board, 0, +1);
+                    move(board, 0, +1);
                 } else if (e.getKeyChar() == 's') {
                     System.out.println("right");
-                    Move(board, 0, -1);
+                    move(board, 0, -1);
                     
                 } else if (e.getKeyChar() == 'a') {
                     System.out.println("down");
-                    Move(board, -1, 0);
+                    move(board, -1, 0);
                     
                 } else  if (e.getKeyChar() == 'd') {
                     System.out.println("up");
-                    Move(board, +1,0);
+                    move(board, +1, 0);
                 }
                 
 
@@ -66,9 +66,10 @@ public class Player extends JPanel implements ActionListener {
 
         }
     }
-    public void Move(Board board, int dx,int dy) {
-        this.gui = gui;
-        if (board.getValue(chpos.getX() + dx, chpos.getY() + dy) != '#' && board.getValue(chpos.getX() +dx , chpos.getY() +dy) != '=') {
+    public void move(Board board, int dx, int dy) {
+
+        if (board.getValue(chpos.getX() + dx, chpos.getY() + dy) != '#'
+             && board.getValue(chpos.getX() + dx, chpos.getY() + dy) != '=') {
             board.setValueBox(chpos.getX(), chpos.getY(), 'o');
 
             chpos.setX(chpos.getX() + dx);

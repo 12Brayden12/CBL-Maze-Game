@@ -8,7 +8,10 @@ public class SoundManager {
 
     public static void playSound(String fileName) {
         File soundFile = new File(SOUND_FOLDER + "/" + fileName);
-        if (!soundFile.exists()) return;
+        if (!soundFile.exists()) {
+            return;
+
+        }
 
         try {
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
@@ -20,10 +23,10 @@ public class SoundManager {
             e.printStackTrace();
         }
     }
-    public void playBGM(String bgmFile){
-        try{
-            File musicPath = new File("sounds/"+bgmFile);
-            if (musicPath.exists()){
+    public void playBGM(String bgmFile) {
+        try {
+            File musicPath = new File("sounds/" + bgmFile);
+            if (musicPath.exists()) {
                 AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
                 bgmClip = AudioSystem.getClip();
                 bgmClip.open(audioInput);

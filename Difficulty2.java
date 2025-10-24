@@ -1,26 +1,25 @@
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
 import java.awt.Component;
 import java.awt.Dimension;
+import javax.swing.*;
 
 public class Difficulty2 {
     
     private JFrame frame;
-    private JPanel panel;
     private JButton easy;
     private JButton medium;
     private JButton hard;
     private BoxLayout boxLayout;
 
+ 
     public Difficulty2() {
         frame = new JFrame("Difficulty");
         boxLayout = new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS);
         Font font = new Font("Verdana", Font.BOLD, 40);
-        Dimension buttonSize = new Dimension(300,60);
+        Dimension buttonSize = new Dimension(300, 60);
         easy = new JButton();
         easy.setText("Easy");
         easy.setFont(font);
@@ -69,7 +68,7 @@ public class Difficulty2 {
                 int easyFruit = 5;
                 int easyFakeFruit = 2;
                 int easyTraps = 0;
-                new MazeGameGUI(size,easyFruit, easyFakeFruit, easyTraps);
+                new MazeGameGUI(size ,easyFruit ,easyFakeFruit ,easyTraps);
             }
         });
         hard.addActionListener(new ActionListener() {
@@ -79,7 +78,7 @@ public class Difficulty2 {
                 int hardFruit = 15;
                 int hardFakeFruit = 10;
                 int hardTraps = 3;
-                new MazeGameGUI(size,hardFruit, hardFakeFruit, hardTraps);
+                new MazeGameGUI(size, hardFruit, hardFakeFruit, hardTraps);
             }
         });
         medium.addActionListener(new ActionListener() {
@@ -89,7 +88,7 @@ public class Difficulty2 {
                 int mediumFruit = 6;
                 int mediumFakeFruit = 5;
                 int mediumTraps = 2;
-                new MazeGameGUI(size,mediumFruit, mediumFakeFruit, mediumTraps);
+                new MazeGameGUI(size, mediumFruit, mediumFakeFruit, mediumTraps);
             }
             
         });
