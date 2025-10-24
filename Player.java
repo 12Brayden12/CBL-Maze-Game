@@ -1,10 +1,15 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
-
+import java.awt.event.KeyEvent;
 import javax.swing.*;
+
+/**
+ * Player class represents the player character in the maze game.
+ * It handles player movement based on keyboard input and interacts
+ * with the game board and score tracking.
+ */
 public class Player extends JPanel implements ActionListener {
     
     private final Board board;
@@ -15,8 +20,13 @@ public class Player extends JPanel implements ActionListener {
     
 
     
-
-    public Player(MazeGameGUI gui,Board board,TimerAndScore scores) {
+    /**
+     * Constructs a Player object with the specified board and score tracking.
+     *
+     * @param board The board object representing the maze game.
+     * @param scores The TimerAndScore object for tracking scores.
+     */
+    public Player(MazeGameGUI gui, Board board, TimerAndScore scores) {
         this.board = board;
         this.scores = scores;
         actions = new GameActions(gui, board, scores);
@@ -29,7 +39,13 @@ public class Player extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         repaint();
     }
+
+    /**
+     * KeyListener class for handling keyboard input.
+     */
     public class MyKeyListener extends KeyAdapter { 
+
+        /** Handles key press events for player movement. */
         public void keyPressed(KeyEvent e) {
             if (actions.reversed()) {
                 if (e.getKeyChar() == 'w') {
@@ -66,6 +82,14 @@ public class Player extends JPanel implements ActionListener {
 
         }
     }
+
+    /**
+     * Moves the player character in the specified direction on the board.
+     *
+     * @param board The board object representing the maze game.
+     * @param dx The x-coordinate offset for movement.
+     * @param dy The y-coordinate offset for movement.
+     */
     public void move(Board board, int dx, int dy) {
 
         if (board.getValue(chpos.getX() + dx, chpos.getY() + dy) != '#'

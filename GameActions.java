@@ -7,7 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-
+/**
+ * GameActions class manages various game events such as winning,
+ * losing, collecting fruits, and handling reversed controls.
+ */
 public class GameActions {
     private Timer timeReversed;
     private JFrame win;
@@ -26,8 +29,14 @@ public class GameActions {
     Font font;
     private MazeGameGUI mainFrame;
     
-
-    public GameActions(MazeGameGUI gui, Board board,TimerAndScore scores) {
+    /**
+     * Constructs a GameActions object to handle game events.
+     *
+     * @param gui    The MazeGameGUI instance to interact with the game GUI.
+     * @param board  The game board associated with this GameActions.
+     * @param scores The TimerAndScore instance for score tracking.
+     */
+    public GameActions(MazeGameGUI gui, Board board, TimerAndScore scores) {
         
         mainFrame = gui;
         controlsReversed = false;
@@ -51,6 +60,9 @@ public class GameActions {
         
     }
  
+    /**
+     * Displays a message when the player wins the game.
+     */
     public void Win() {
         mainFrame.getFrame().dispose();
 
@@ -98,6 +110,10 @@ public class GameActions {
             
 
     }
+
+    /**
+     * Displays a message when the player loses the game.
+     */
     public void GameOver() {
         mainFrame.getFrame().dispose();
         
@@ -124,7 +140,7 @@ public class GameActions {
        
         fail.setLayout(new BorderLayout());
         fail.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fail.setSize(500,500);
+        fail.setSize(500, 500);
         fail.setResizable(true);
         fail.setVisible(true);
         fail.add(failPanel, BorderLayout.CENTER);
@@ -132,11 +148,17 @@ public class GameActions {
 
     }
 
+    /**
+     * Handles the event when a fruit is collected by the player.
+     */
     public void fruitAction() {
         scores.fruits();
         soundManager.playSound("fruit.wav");
-     }
+    }
      
+    /**
+    * Handles the event when a fake fruit is collected by the player.
+    */
     public void fakeFruitAction() {
         
         scores.fakeFruit();
