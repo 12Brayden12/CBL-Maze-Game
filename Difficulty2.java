@@ -1,27 +1,20 @@
-import java.awt.Button;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Component;
+import java.awt.Dimension;
 import javax.swing.*;
 
-/**
- * Class that handles the difficulty selection screen for the maze game.
- */
 public class Difficulty2 {
     
     private JFrame frame;
-    private JPanel panel;
     private JButton easy;
     private JButton medium;
     private JButton hard;
     private BoxLayout boxLayout;
 
-    /**
-     * Constructs the difficulty selection window and initializes UI components.
-     */
+ 
     public Difficulty2() {
         frame = new JFrame("Difficulty");
         boxLayout = new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS);
@@ -71,30 +64,30 @@ public class Difficulty2 {
         easy.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                int size = 5;
+                int size = 7;
                 int easyFruit = 5;
                 int easyFakeFruit = 2;
                 int easyTraps = 0;
-                new MazeGameGUI(size, easyFruit, easyFakeFruit, easyTraps);
+                new MazeGameGUI(size ,easyFruit ,easyFakeFruit ,easyTraps);
             }
         });
         hard.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                int size = 10;
-                int hardFruit = 10;
-                int hardFakeFruit = 7;
-                int hardTraps = 5;
+                int size = 20;
+                int hardFruit = 15;
+                int hardFakeFruit = 10;
+                int hardTraps = 3;
                 new MazeGameGUI(size, hardFruit, hardFakeFruit, hardTraps);
             }
         });
         medium.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                int size = 20;
-                int mediumFruit = 7;
+                int size = 12;
+                int mediumFruit = 6;
                 int mediumFakeFruit = 5;
-                int mediumTraps = 5;
+                int mediumTraps = 2;
                 new MazeGameGUI(size, mediumFruit, mediumFakeFruit, mediumTraps);
             }
             

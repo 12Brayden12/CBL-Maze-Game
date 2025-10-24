@@ -1,17 +1,13 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.BorderLayout;
 import javax.swing.*;
 
 
-/**
- * Handles game actions and states such as winning, losing, and power-up effects.
- */
 public class GameActions {
     private Timer timeReversed;
     private JFrame win;
@@ -31,13 +27,7 @@ public class GameActions {
     private MazeGameGUI mainFrame;
     
 
-    /**
-     * Constructs a GameActions object to handle game states and actions.
-     * @param gui The main game GUI
-     * @param board The game board
-     * @param scores The timer and score tracker
-     */
-    public GameActions(MazeGameGUI gui, Board board, TimerAndScore scores) {
+    public GameActions(MazeGameGUI gui, Board board,TimerAndScore scores) {
         
         mainFrame = gui;
         controlsReversed = false;
@@ -61,10 +51,7 @@ public class GameActions {
         
     }
  
-    /**
-     * Handles the win condition of the game, displaying the win screen with score.
-     */
-    public void win() {
+    public void Win() {
         mainFrame.getFrame().dispose();
 
         winLabel.setText("Congratulations!!!");
@@ -73,8 +60,8 @@ public class GameActions {
         winLabel.setForeground(Color.BLACK);
         winLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        information.setText("<html><center>You successfully reached<br>"
-                + "the end of the game!</center></html>");
+        information.setText("<html><center>You successfully reached<br>the" 
+            + "end of the game!</center></html>");
         information.setFont(font);
         information.setMaximumSize(new Dimension(400, 50));
         information.setForeground(Color.BLACK);
@@ -111,21 +98,17 @@ public class GameActions {
             
 
     }
-
-    /**
-     * Handles the game over condition, displaying the failure screen.
-     */
-    public void gameOver() {
+    public void GameOver() {
         mainFrame.getFrame().dispose();
         
         failLabel.setText("Game Over!!!");
-        failLabel.setFont(new Font("Verdana", Font.BOLD, 40));
+        failLabel.setFont(new Font("Verdana", font.BOLD, 40));
         
         failLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         failLabel.setForeground(Color.RED);
 
         information2.setText("Try again!");
-        information2.setFont(new Font("Verdana", Font.BOLD, 25));
+        information2.setFont(new Font("Verdana", font.BOLD, 25));
         
         information2.setAlignmentX(Component.CENTER_ALIGNMENT);
         information2.setForeground(Color.BLACK);
@@ -141,7 +124,7 @@ public class GameActions {
        
         fail.setLayout(new BorderLayout());
         fail.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fail.setSize(500, 500);
+        fail.setSize(500,500);
         fail.setResizable(true);
         fail.setVisible(true);
         fail.add(failPanel, BorderLayout.CENTER);
@@ -149,40 +132,36 @@ public class GameActions {
 
     }
 
-    /**
-     * Handles the action when a fruit is collected.
-     */
     public void fruitAction() {
         scores.fruits();
-        SoundManager.playSound("fruit.wav");
-    }
+        soundManager.playSound("fruit.wav");
+     }
      
-    /**
-     * Handles the action when a fake fruit is collected, reverses controls for a duration.
-     */
     public void fakeFruitAction() {
+        
         scores.fakeFruit();
-        SoundManager.playSound("fakefruit.wav");
-
+        soundManager.playSound("fakefruit.wav");
+        
         mainFrame.getPanel('b').removeAll();
         mainFrame.getFrame().repaint();
         JButton[] reversedbButtons = mainFrame.getButtons();
         String[] original = mainFrame.getPositions('o');
         String[] positions2 = mainFrame.getPositions('r');
         String[] buttonNames = mainFrame.getNames();
-
+        
         for (int i = 0; i < buttonNames.length; i++) {
+
             reversedbButtons[i].setFocusable(false);
             mainFrame.getPanel('b').add(reversedbButtons[i], positions2[i]);
         }
         mainFrame.getFrame().add(mainFrame.getPanel('b'), BorderLayout.SOUTH);
         mainFrame.getPanel('b').add(mainFrame.getPanel('c'), BorderLayout.CENTER);
-        mainFrame.getFrame().revalidate();
+        mainFrame.getFrame().revalidate(); 
         mainFrame.getPanel('b').repaint();
         mainFrame.getFrame().repaint();
 
         controlsReversed = true;
-
+        
         int duration = 10000;
         if (timeReversed != null && timeReversed.isRunning()) {
             timeReversed.stop();
@@ -193,13 +172,14 @@ public class GameActions {
                 for (int i = 0; i < buttonNames.length; i++) {
                     reversedbButtons[i].setFocusable(false);
                     mainFrame.getPanel('b').add(reversedbButtons[i], original[i]);
+
                 }
                 mainFrame.getFrame().add(mainFrame.getPanel('b'), BorderLayout.SOUTH);
                 mainFrame.getPanel('b').add(mainFrame.getPanel('c'), BorderLayout.CENTER);
                 mainFrame.getFrame().revalidate();
                 mainFrame.getPanel('b').repaint();
                 mainFrame.getFrame().repaint();
-            }
+            } 
         });
         timeReversed.setRepeats(false);
         timeReversed.start();
