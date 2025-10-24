@@ -52,7 +52,7 @@ public class MazeGameGUI {
         
         gameFrame.setTitle("Maze Game");
         gameFrame.setLayout(new BorderLayout());
-        gameFrame.setSize(500, 500);
+        gameFrame.setSize(700, 700);
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameFrame.setResizable(true);
         gameFrame.setLocationRelativeTo(null);

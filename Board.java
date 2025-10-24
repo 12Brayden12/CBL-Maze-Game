@@ -12,7 +12,7 @@ public class Board extends JPanel {
     private boolean[][] accessible;
     private int size;
     private int unVisited;
-    private int scale=1;
+    private int scale;
     private Image trapImage;
     private Image playerImage;
     private Image fruitImage;
@@ -27,7 +27,7 @@ public class Board extends JPanel {
         codeMaze();
         addGameObject('+', fruitC);
         addGameObject('!', fakeFruitC);
-        addTraps(trapC);
+        addGameObject('@',trapC);
         
         trapImage = new ImageIcon("images/trap.jpg").getImage();
         playerImage = new ImageIcon("images/player.jpg").getImage();
@@ -151,7 +151,7 @@ public class Board extends JPanel {
             if (randY%2 != 0 && randY != 0 && randY != size-1) {
                 pos.setY(randY);
             }
-            char value = getValue(pos.getX(), pos.getY());
+            
             if (getValue(pos.getX(), pos.getY()) != 'v') {
                 pos.setX(0); 
                 pos.setY(0); 
@@ -164,7 +164,7 @@ public class Board extends JPanel {
             
             
         }
-    public void addTraps(int trapCount) {
+    /*public void addTraps(int trapCount) {
         for ( int x = 1; x < size; x +=2) {
             for (int y = 1; y < size; y += 2) {
                 char value = getValue(x, y);
@@ -181,6 +181,7 @@ public class Board extends JPanel {
             setValueBox(pos.getX(), pos.getY(), '@');
         }
     }
+        */
     
  
 
@@ -209,7 +210,7 @@ public void generate(int posX, int posY){
     accessible = new boolean[size][size];
 		currentCell = new Position(posX,posY);
 		setValueBox(currentCell.getX(),currentCell.getY(), 'v');
-        accessible[currentCell.getX()][currentCell.getY()] = true;
+        
 		unVisited-=1;
 		
 		char north=0,south=0,east=0,west=0;
@@ -233,7 +234,7 @@ public void generate(int posX, int posY){
 			if((random == 0) && (direction[0] == 'u')){ 
 				if (getValue(x,y-1) != '#'){
 					setValueBox(x, y-1, 'v');
-                    accessible[x][y-1] = true;
+                    
 					currentCell = new Position(x, y-2);
 					positions.push(currentCell);
 					
@@ -245,7 +246,7 @@ public void generate(int posX, int posY){
 			else if((random == 1) && (direction[1] == 'u')){ 
 				if (getValue(x,y+1) != '#'){
 					setValueBox(x, y+1, 'v');
-                    accessible[x][y+1] = true;
+                    
 					currentCell = new Position(x, y+2);
 					positions.push(currentCell);
 					
@@ -257,7 +258,7 @@ public void generate(int posX, int posY){
 			else if((random == 2) && (direction[2] == 'u')){ 
 				if (getValue(x+1,y) != '#'){
 					setValueBox(x+1, y, 'v');
-                    accessible[x+1][y] = true;
+                    
 					currentCell = new Position(x+2, y);
 					positions.push(currentCell);
 					
@@ -269,7 +270,7 @@ public void generate(int posX, int posY){
 			else if((random == 3) && (direction[3] == 'u')) { 
 				if (getValue(x-1,y) != '#'){
 					setValueBox(x-1, y, 'v');
-                    accessible[x-1][y] = true;
+                    
 					currentCell = new Position(x-2, y);
 					positions.push(currentCell);
 					
