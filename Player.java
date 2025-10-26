@@ -100,7 +100,7 @@ public class Player extends JPanel implements ActionListener {
             chpos.setY(chpos.getY() + dy);
 
             if (board.getValue(chpos.getX(), chpos.getY()) == '8') {
-                actions.Win();
+                actions.win();
                 
                 
             } else if (board.getValue(chpos.getX(), chpos.getY())  == '+') {
@@ -114,7 +114,7 @@ public class Player extends JPanel implements ActionListener {
                 board.setValueBox(chpos.getX(), chpos.getY(), 'X');
                 
             } else if (board.getValue(chpos.getX(), chpos.getY()) == '@') {
-                actions.GameOver();
+                actions.gameOver();
                 
             } else {
                 board.setValueBox(chpos.getX(), chpos.getY(), 'X');

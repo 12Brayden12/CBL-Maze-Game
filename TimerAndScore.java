@@ -48,7 +48,7 @@ public class TimerAndScore {
                 updateTimeLabel();
                 if (remainingTime <= 0) {
                     timerStop();
-                    actions.GameOver();
+                    actions.gameOver();
 
 
                     

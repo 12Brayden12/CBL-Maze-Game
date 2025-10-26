@@ -63,7 +63,7 @@ public class GameActions {
     /**
      * Displays a message when the player wins the game.
      */
-    public void Win() {
+    public void win() {
         mainFrame.getFrame().dispose();
 
         winLabel.setText("Congratulations!!!");
@@ -114,7 +114,7 @@ public class GameActions {
     /**
      * Displays a message when the player loses the game.
      */
-    public void GameOver() {
+    public void gameOver() {
         mainFrame.getFrame().dispose();
         
         failLabel.setText("Game Over!!!");
