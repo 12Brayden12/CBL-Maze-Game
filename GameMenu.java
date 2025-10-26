@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.Border;
 
 /**
  * GameMenu class creates the main menu for the maze game,
@@ -88,8 +87,8 @@ public class GameMenu {
         rulesText.setText(
             "Welcome to the Maze Java-based video game!\n"
             + "In these difficult ages of the prevalent obesity and unconscious eating disorders\n"
-            + "helping others regain awareness about the importance of healthy eating.\n"
-            + "The life of the x on this planet is limited.\n"
+            + "helping others regaining awareness about the importance of healthy eating.\n"
+            + "The life of the Mico on this planet is limited.\n"
             + "Your main goal is to extend the life of x! Help him collect all of the fruits"
             + " while escaping the vicious cycle of unhealthy food\n"
             + "Try to avoid all of the off fruits, and find the exit as soon as possible.\n"
