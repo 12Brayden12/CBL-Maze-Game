@@ -12,11 +12,11 @@ Difficulty selection: Choose between Easy, Medium, and Hard.
 
 ## Test Features
 
-Movement: Use w,a,s,d or click the movement panel to move.
-Fake fruits: Eat fake fruits cause reverse control and increase fake fruit counter.
-Traps: Eat traps will cause game over.
-Fruits: Eat fruits will increase score by 50.
-Timer: Timer will count down and cause game over when time is up. The more time left, the higher score multiplier you get.
-BGM: Background music will play when game starts.
-Sound Effects: Sound effects will play when eating fruits,and eating fake fruits.
+Movement: Use w,a,s,d (alternatively arrows) or click the movement panel to move.
+Fake fruits: Eating fake fruits causes control reversal and increases fake fruit counter by 1.
+Traps: Falling into a trap ends the game in failure.
+Fruits: Eating fruits increases the score of the playe by 50.
+Timer: Timer counts down and cases the game to end when time is up. The more time left, the higher score multiplier you get.
+BGM: Background music starts playing when game is started.
+Sound Effects: Sound effects are triggered in case either a fruit or a fake fruit has been eaten.
 
